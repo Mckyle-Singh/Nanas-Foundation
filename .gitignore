@@ -1,0 +1,26 @@
+﻿# Environment config
+.env
+
+# App settings (optional if secrets are inside)
+appsettings.json
+appsettings.Development.json
+
+# Build artifacts
+bin/
+obj/
+out/
+
+# IDE folders
+.vscode/
+.idea/
+.vs/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# 🧪 Test results
+TestResult.xml
+buildlog.*
+
+
