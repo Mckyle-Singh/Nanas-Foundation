@@ -10,9 +10,9 @@ namespace Nanas_Foundation
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            Env.Load(); // Load .env file from root
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DB_CONNECTION_STRING") ?? throw new InvalidOperationException("Connection string 'DB_CONNECTION_STRING' not found.");
+            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? throw new InvalidOperationException("Connection string 'DB_CONNECTION_STRING' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -21,7 +21,7 @@ namespace Nanas_Foundation
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
-            Env.Load(); // Load .env file from root
+            
             var app = builder.Build();
 
 
