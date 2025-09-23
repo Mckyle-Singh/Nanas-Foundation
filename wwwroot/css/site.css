@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.login-link {
+    color: #DA5B34 !important;
+    font-weight: 500;
+}
+
