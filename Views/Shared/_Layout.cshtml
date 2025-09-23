@@ -23,7 +23,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Mission">Our Mission</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Resources">Resources</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="getInvolvedDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Get Involved
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="getInvolvedDropdown">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Volunteer">Volunteer</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Donate">Make Donation</a></li>
+                            </ul>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -39,9 +54,10 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - Nanas_Foundation - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - Nanas_Foundation
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
