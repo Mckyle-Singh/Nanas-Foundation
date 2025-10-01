@@ -1,7 +1,9 @@
 using DotNetEnv;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Nanas_Foundation.Data;
+using Nanas_Foundation.Services;
 
 namespace Nanas_Foundation
 {
@@ -17,11 +19,15 @@ namespace Nanas_Foundation
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            
+            builder.Services.AddTransient<IEmailSender, DummyEmailSender>();
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
+
+
             var app = builder.Build();
 
 
@@ -48,6 +54,12 @@ namespace Nanas_Foundation
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                IdentitySeeder.SeedRolesAndAdminAsync(services).GetAwaiter().GetResult();
+            }
 
             app.Run();
         }
