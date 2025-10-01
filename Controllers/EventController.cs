@@ -17,7 +17,8 @@ namespace Nanas_Foundation.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var events = _context.Events.ToList();
+            return View(events);
         }
         [HttpGet]
         public IActionResult Create()
