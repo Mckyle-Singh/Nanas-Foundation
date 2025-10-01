@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <None Include=".github\workflows\build-and-test.yml" />
+    <None Include="Controllers\EventController.cs" />
   </ItemGroup>
 
 </Project>
