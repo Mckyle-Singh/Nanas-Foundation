@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Nanas_Foundation.Models;
 
 namespace Nanas_Foundation.Data
 {
@@ -10,5 +11,7 @@ namespace Nanas_Foundation.Data
             : base(options)
         {
         }
+        public DbSet<Event> Events { get; set; }
+
     }
 }
