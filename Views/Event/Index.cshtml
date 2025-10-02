@@ -13,6 +13,7 @@
             <th>Date</th>
             <th>Location</th>
             <th>Description</th>
+            <th>Options</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,9 @@
                 <td>@evt.Date.ToString("f")</td>
                 <td>@evt.Location</td>
                 <td>@evt.Description</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@evt.Id">Edit</a>
+                </td>
             </tr>
         }
     </tbody>

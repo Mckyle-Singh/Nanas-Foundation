@@ -39,7 +39,7 @@ namespace Nanas_Foundation.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(Guid id)
         {
             var evt = _context.Events.Find(id);
             if (evt == null) return NotFound();
