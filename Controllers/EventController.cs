@@ -38,5 +38,13 @@ namespace Nanas_Foundation.Controllers
             return View(evt);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var evt = _context.Events.Find(id);
+            if (evt == null) return NotFound();
+            return View(evt);
+        }
+
     }
 }
