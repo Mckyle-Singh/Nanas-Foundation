@@ -46,5 +46,30 @@ namespace Nanas_Foundation.Controllers
             return View(evt);
         }
 
+        [HttpPost]
+        public IActionResult Edit(Guid id, Event updatedEvent)
+        {
+            if (id != updatedEvent.Id) return BadRequest();
+
+            if (ModelState.IsValid)
+            {
+                _context.Events.Update(updatedEvent);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(updatedEvent);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            var evt = _context.Events.Find(id);
+            if (evt == null) return NotFound();
+
+            _context.Events.Remove(evt);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }
