@@ -30,6 +30,10 @@
                         <form asp-action="Delete" asp-route-id="@evt.Id" method="post" onsubmit="return confirm('Are you sure?');">
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
+                        <form asp-controller="Volunteers" asp-action="VolunteerForEvent" method="post">
+                            <input type="hidden" name="eventId" value="@evt.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">Volunteer</button>
+                        </form>
                     </div>
                 </td>
             </tr>

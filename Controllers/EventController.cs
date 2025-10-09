@@ -71,5 +71,26 @@ namespace Nanas_Foundation.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetDetailsJson(Guid id)
+        {
+            var evt = await _context.Events
+                .Where(e => e.Id == id)
+                .Select(e => new
+                {
+                    name = e.Title,
+                    description = e.Description,
+                    date = e.Date.ToString("yyyy-MM-dd"),
+                    location = e.Location
+                })
+                .FirstOrDefaultAsync();
+
+            if (evt == null)
+                return NotFound();
+
+            return Json(evt);
+        }
+
+        
     }
 }
