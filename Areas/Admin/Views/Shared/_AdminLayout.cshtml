@@ -1,0 +1,12 @@
+﻿<body>
+    <!-- Sidebar + Main Content -->
+    <div class="d-flex">
+        @await Html.PartialAsync("~/Areas/Admin/Views/Shared/_AdminSidebar.cshtml")
+        <main class="flex-grow-1 p-4">
+            @RenderBody()
+        </main>
+    </div>
+</body>
+
+
+
