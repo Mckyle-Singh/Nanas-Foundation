@@ -23,6 +23,11 @@ namespace Nanas_Foundation
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
+
             builder.Services.AddTransient<IEmailSender, DummyEmailSender>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
