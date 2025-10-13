@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Impact Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="text-danger fw-bold mb-2">IMPACT DASHBOARD</h1>
+    <h2 class="fw-semibold text-dark mb-1">Tracking Our Progress</h2>
+    <p class="text-muted mb-4">An overview of our initiatives and their outcomes.</p>
+
+    <!-- Search Bar -->
+    <div class="input-group mb-4" style="max-width: 400px;">
+        <input type="text" class="form-control" placeholder="Search resources..." />
+        <button class="btn btn-outline-secondary" type="button">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+
+    <!-- Metrics Summary -->
+    <div class="row text-center mb-4">
+        <div class="col-md-3">
+            <div class="bg-light p-3 rounded shadow-sm">
+                <i class="bi bi-mic-fill fs-2 text-danger mb-2"></i>
+                <h4 class="fw-bold">52</h4>
+                <p class="text-muted">Speeches Conducted</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="bg-light p-3 rounded shadow-sm">
+                <i class="bi bi-people-fill fs-2 text-danger mb-2"></i>
+                <h4 class="fw-bold">1,250</h4>
+                <p class="text-muted">Individuals Reached</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="bg-light p-3 rounded shadow-sm">
+                <i class="bi bi-easel-fill fs-2 text-danger mb-2"></i>
+                <h4 class="fw-bold">18</h4>
+                <p class="text-muted">Workshops Facilitated</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="bg-light p-3 rounded shadow-sm">
+                <i class="bi bi-person-heart fs-2 text-danger mb-2"></i>
+                <h4 class="fw-bold">65</h4>
+                <p class="text-muted">Volunteers Engaged</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Placeholder Graph -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="bg-white p-4 rounded shadow-sm">
+                <h5 class="fw-bold mb-3">Monthly Reach</h5>
+                <img src="https://placehold.co/400x400" class="img-fluid" alt="Monthly Reach Graph" />
+                <p class="mt-2 text-muted">Understand common rephostatisical and fit the methods at the...</p>
+                <a href="#" class="btn btn-sm btn-outline-danger">Read Article</a>
+            </div>
+        </div>
+
+        <!-- Pie Chart -->
+        <div class="col-md-6">
+            <div class="bg-white p-4 rounded shadow-sm">
+                <h5 class="fw-bold mb-3">Sessions by Type</h5>
+                <img src="https://placehold.co/400x400" class="img-fluid mb-2" alt="Session Types" />
+                <ul class="list-unstyled text-muted">
+                    <li><span class="text-danger fw-bold">●</span> Outreach: 50%</li>
+                    <li><span class="text-warning fw-bold">●</span> Education: 35%</li>
+                    <li><span class="text-info fw-bold">●</span> Advocacy: 15%</li>
+                </ul>
+                <a href="#" class="btn btn-sm btn-outline-danger">View Resource</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,6 +23,11 @@ namespace Nanas_Foundation
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
+
             builder.Services.AddTransient<IEmailSender, DummyEmailSender>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
@@ -49,6 +54,10 @@ namespace Nanas_Foundation
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",
