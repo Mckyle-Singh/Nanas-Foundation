@@ -1,0 +1,63 @@
+﻿@model Nanas_Foundation.Models.Donation
+@{
+    ViewData["Title"] = "Make a Donation";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@* show server-side validation summary *@
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+@if (TempData["DonationError"] != null)
+{
+    <div class="alert alert-danger">@TempData["DonationError"]</div>
+}
+@if (TempData["LoginMessage"] != null)
+{
+    <div class="alert alert-warning">@TempData["LoginMessage"]</div>
+}
+
+
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="Amount" class="form-label"></label>
+        <input asp-for="Amount" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Bank" class="form-label"></label>
+        <select asp-for="Bank" class="form-control" asp-items="new SelectList(ViewBag.Banks)"></select>
+        <span asp-validation-for="Bank" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CardNumber" class="form-label"></label>
+        <input asp-for="CardNumber" class="form-control" maxlength="50" inputmode="numeric
+        <small class="form-text text-muted">Card data will be processed and hashed securely.</small>
+        <span asp-validation-for="CardNumber" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NameOnCard" class="form-label"></label>
+        <input asp-for="NameOnCard" class="form-control" maxlength="100" />
+        <span asp-validation-for="NameOnCard" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CVC" class="form-label"></label>
+        <input asp-for="CVC" class="form-control" maxlength="10" inputmode="numeric" />
+        <span asp-validation-for="CVC" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Donate</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
