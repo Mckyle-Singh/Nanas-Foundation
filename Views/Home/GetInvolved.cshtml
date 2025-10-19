@@ -1,0 +1,236 @@
+@{
+    ViewData["Title"] = "Get Involved";
+}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="hero-content">
+                    <h1 class="hero-title">Get Involved</h1>
+                    <p class="hero-quote">
+                        "Together, we can make a difference in the lives of those who need support the most."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Ways to Help -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="events-title">Ways to Make a Difference</h2>
+            <p class="lead text-muted">Choose how you'd like to support our mission</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="event-card text-center h-100">
+                    <i class="bi bi-hands-helping" style="font-size: 3rem; color: #DA5B34; margin-bottom: 20px;"></i>
+                    <h4 class="event-title">Volunteer</h4>
+                    <p>Join our team of dedicated volunteers and directly impact lives in your community through events, counseling support, and outreach programs.</p>
+                    <a asp-controller="Volunteers" asp-action="VolunteerForEvent" class="btn btn-outline-primary" style="border-color: #DA5B34; color: #DA5B34;">Start Volunteering</a>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="event-card text-center h-100">
+                    <i class="bi bi-heart-fill" style="font-size: 3rem; color: #DA5B34; margin-bottom: 20px;"></i>
+                    <h4 class="event-title">Donate</h4>
+                    <p>Your financial support helps us provide free counseling services, educational programs, and crisis intervention to those who need it most.</p>
+                    <a href="#donation-section" class="btn btn-outline-primary" style="border-color: #DA5B34; color: #DA5B34;">Make a Donation</a>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="event-card text-center h-100">
+                    <i class="bi bi-megaphone" style="font-size: 3rem; color: #DA5B34; margin-bottom: 20px;"></i>
+                    <h4 class="event-title">Advocate</h4>
+                    <p>Help us spread awareness about mental health issues and reduce stigma by sharing our message and supporting our advocacy efforts.</p>
+                    <a href="#advocacy-section" class="btn btn-outline-primary" style="border-color: #DA5B34; color: #DA5B34;">Join Advocacy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Donation Section -->
+<section id="donation-section" class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="text-center mb-5">
+                    <h2 class="mission-title">Make a Donation</h2>
+                    <p class="lead">Your support directly funds our programs and services</p>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="event-card text-center">
+                            <h5 class="event-title">$25</h5>
+                            <p>Provides one counseling session for a young person in need</p>
+                            <button class="btn btn-light" style="background: #DA5B34; color: white; border: none; width: 100%;">Donate $25</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="event-card text-center">
+                            <h5 class="event-title">$50</h5>
+                            <p>Funds educational materials for one mental health workshop</p>
+                            <button class="btn btn-light" style="background: #DA5B34; color: white; border: none; width: 100%;">Donate $50</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="event-card text-center">
+                            <h5 class="event-title">$100</h5>
+                            <p>Supports crisis intervention services for one month</p>
+                            <button class="btn btn-light" style="background: #DA5B34; color: white; border: none; width: 100%;">Donate $100</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <div class="event-card">
+                        <h5 class="event-title">Custom Amount</h5>
+                        <p>Choose your own donation amount</p>
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" placeholder="Enter amount" min="1">
+                                    <button class="btn btn-light" style="background: #DA5B34; color: white; border: none;">Donate</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Volunteer Opportunities -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="events-title">Volunteer Opportunities</h2>
+            <p class="lead text-muted">Find the perfect way to contribute your skills and time</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="event-card">
+                    <div class="d-flex align-items-start">
+                        <div class="me-3">
+                            <i class="bi bi-calendar-event" style="font-size: 2rem; color: #DA5B34;"></i>
+                        </div>
+                        <div>
+                            <h4 class="event-title">Event Support</h4>
+                            <p>Help organize and run our community events, workshops, and fundraising activities.</p>
+                            <a asp-controller="Volunteers" asp-action="VolunteerForEvent" class="event-link">Sign Up for Events</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="event-card">
+                    <div class="d-flex align-items-start">
+                        <div class="me-3">
+                            <i class="bi bi-chat-heart" style="font-size: 2rem; color: #DA5B34;"></i>
+                        </div>
+                        <div>
+                            <h4 class="event-title">Peer Support</h4>
+                            <p>Provide emotional support and guidance to individuals going through similar experiences.</p>
+                            <a href="#" class="event-link">Learn About Peer Support</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="event-card">
+                    <div class="d-flex align-items-start">
+                        <div class="me-3">
+                            <i class="bi bi-laptop" style="font-size: 2rem; color: #DA5B34;"></i>
+                        </div>
+                        <div>
+                            <h4 class="event-title">Digital Support</h4>
+                            <p>Help with website maintenance, social media, graphic design, or online outreach.</p>
+                            <a href="#" class="event-link">Digital Volunteer Roles</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="event-card">
+                    <div class="d-flex align-items-start">
+                        <div class="me-3">
+                            <i class="bi bi-briefcase" style="font-size: 2rem; color: #DA5B34;"></i>
+                        </div>
+                        <div>
+                            <h4 class="event-title">Professional Services</h4>
+                            <p>Offer your professional skills in counseling, legal advice, accounting, or other specialized areas.</p>
+                            <a href="#" class="event-link">Professional Volunteers</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Advocacy Section -->
+<section id="advocacy-section" class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="text-center mb-5">
+                    <h2 class="mission-title">Become an Advocate</h2>
+                    <p class="lead">Help us change the conversation around mental health</p>
+                </div>
+                
+                <div class="mission-text">
+                    <h4>How You Can Advocate:</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill me-3" style="color: #DA5B34;"></i>
+                            <strong>Share Our Story:</strong> Use social media to spread awareness about mental health resources
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill me-3" style="color: #DA5B34;"></i>
+                            <strong>Contact Representatives:</strong> Advocate for better mental health policies in your community
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill me-3" style="color: #DA5B34;"></i>
+                            <strong>Organize Awareness Events:</strong> Host discussions and educational sessions in your network
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill me-3" style="color: #DA5B34;"></i>
+                            <strong>Challenge Stigma:</strong> Speak up against mental health discrimination and misconceptions
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a asp-controller="Home" asp-action="Contact" class="btn btn-light" style="background: #DA5B34; color: white; border: none;">Join Our Advocacy Network</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Corporate Partnerships -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mission-title">Corporate Partnerships</h2>
+                <p class="lead mb-4">Partner with us to make a larger impact in the community</p>
+                <div class="mission-text">
+                    <p>We work with businesses and organizations to create comprehensive mental health support programs. Partnership opportunities include employee wellness programs, sponsorship of events, and collaborative community initiatives.</p>
+                </div>
+                <div class="hero-buttons">
+                    <a asp-controller="Home" asp-action="Contact" class="btn btn-light" style="background: #DA5B34; color: white; border: none;">Partner With Us</a>
+                    <a asp-controller="Home" asp-action="About" class="btn btn-outline-primary" style="border-color: #DA5B34; color: #DA5B34;">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
