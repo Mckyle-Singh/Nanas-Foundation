@@ -18,19 +18,14 @@ namespace Nanas_Foundation.Models
         [StringLength(100)]
         public string Bank { get; set; } = string.Empty;
 
-        [Required]
-        [StringLength(50, MinimumLength = 12, ErrorMessage = "Card number must be between 12 and 50 characters.")]
-        public string CardNumber { get; set; } = string.Empty; // will be hashed before saving in production
-
-        [Required]
-        [StringLength(100)]
-        public string NameOnCard { get; set; } = string.Empty;
-
-        [Required]
-        [StringLength(10, MinimumLength = 3, ErrorMessage = "CVC must be 3-4 digits.")]
-        public string CVC { get; set; } = string.Empty; // will be hashed before saving
+        [StringLength(500)]
+        public string? Notes { get; set; }
 
         [Required]
         public DateTime DonationDate { get; set; } = DateTime.UtcNow;
+
+        // Optional: store Stripe session id/reference for auditing
+        [StringLength(200)]
+        public string? StripeSessionId { get; set; }
     }
 }
