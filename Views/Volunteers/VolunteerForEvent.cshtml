@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Volunteer for an Event";
+}
+
+<div class="container mt-5">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold" style="color: #DA5B34;">NANA'S FOUNDATION</h1>
+    </div>
+
+    <!-- Title & Description -->
+    <h2 class="fw-bold text-center">Volunteer for an Event</h2>
+    <p class="text-center text-muted">
+        How you can contribute and make a difference by volunteering with <strong>Nana's Foundation</strong>.
+    </p>
+
+    <!-- Form -->
+    <form asp-action="VolunteerForEvent" method="post" class="mt-4">
+        <div class="form-group mb-3">
+            <label for="eventId" class="form-label">Choose an event:</label>
+            <select id="eventId" name="eventId" class="form-select" required>
+                <option value="">-- Select an event --</option>
+                @foreach (var item in ViewBag.Events as List<SelectListItem>)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+        </div>
+
+        <!-- Event Details Panel -->
+        <div id="eventDetails" class="border rounded p-3 mb-4" style="display: none;">
+            <h5 id="eventTitle" class="fw-bold mb-2">Event Title</h5>
+            <p id="eventDescription" class="mb-1">Event description text goes here.</p>
+            <p><strong>Date:</strong> <span id="eventDate">YYYY-MM-DD</span></p>
+            <p><strong>Location:</strong> <span id="eventLocation">Event Location</span></p>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn fw-bold px-4 py-2" style="background-color: #DA5B34; color: white;">
+            Volunteer
+        </button>
+    </form>
+
+    <!-- Footer -->
+    <footer class="mt-5 text-muted text-center small">
+        &copy; 2025 Nana's Foundation
+    </footer>
+</div>
+
+<!-- JavaScript for dynamic event details -->
+<script>
+    document.getElementById("eventId").addEventListener("change", function () {
+        const eventId = this.value;
+        const detailsPanel = document.getElementById("eventDetails");
+
+        if (!eventId) {
+            detailsPanel.style.display = "none";
+            return;
+        }
+
+        fetch(`/Event/GetDetailsJson?id=${eventId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("eventTitle").textContent = data.name;
+                document.getElementById("eventDescription").textContent = data.description;
+                document.getElementById("eventDate").textContent = data.date;
+                document.getElementById("eventLocation").textContent = data.location;
+                detailsPanel.style.display = "block";
+            })
+            .catch(() => {
+                detailsPanel.style.display = "none";
+            });
+    });
+</script>
+
+
+
