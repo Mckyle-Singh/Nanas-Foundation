@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,55 +12,99 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Nanas_Foundation</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+        <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+            <div class="container">
+                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">LOGO</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-flex justify-content-between align-items-center w-100">
-                    <!-- Centered Navigation -->
-                    <ul class="navbar-nav mx-auto">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Mission">Our Mission</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Mission">Our Mission</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Stories">Our stories</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Resources">Resources</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="getInvolvedDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="getInvolvedDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Get Involved
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="getInvolvedDropdown">
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Volunteers" asp-action="VolunteerForEvent">Volunteer</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Donate">Make Donation</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="GetInvolved">Make Donation</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <partial name="_LoginPartial" />
+                        </li>
                     </ul>
-                    <!-- Right-Aligned Login/Register -->
-                    <div class="d-flex align-items-center">
-                        <partial name="_LoginPartial" />
-                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main">
+        @RenderBody()
+    </main>
 
-    <footer class="border-top footer text-muted">
+    <footer class="custom-footer">
         <div class="container">
-            &copy; 2025 - Nanas_Foundation
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="footer-brand">Nanas Foundation</div>
+                    <p class="footer-tagline">Empowering youth, reducing stigma, building stronger communities together.</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" title="Twitter"><i class="bi bi-twitter"></i></a>
+                        <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <h5>About Us</h5>
+                        <ul>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Mission"><i class="bi bi-arrow-right"></i>Our Mission</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="About"><i class="bi bi-arrow-right"></i>Our Story</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Team"><i class="bi bi-arrow-right"></i>Our Team</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Contact"><i class="bi bi-arrow-right"></i>Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <h5>Resources</h5>
+                        <ul>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Privacy"><i class="bi bi-arrow-right"></i>Privacy Policy</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Help"><i class="bi bi-arrow-right"></i>Help Center</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Blog"><i class="bi bi-arrow-right"></i>Blog</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="FAQ"><i class="bi bi-arrow-right"></i>FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <h5>Stay Connected</h5>
+                        <p style="color: #bdc3c7; margin-bottom: 20px;">Get updates on our latest initiatives and events.</p>
+                        <div class="newsletter-section">
+                            <h6><i class="bi bi-envelope-heart me-2"></i>Newsletter</h6>
+                            <div class="newsletter-form">
+                                <input type="email" placeholder="Enter your email" class="form-control">
+                                <button type="submit" class="btn">
+                                    <i class="bi bi-send"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nanas Foundation. All rights reserved. | Made with <i class="bi bi-heart-fill" style="color: #DA5B34;"></i> for our community</p>
+            </div>
         </div>
     </footer>
 
