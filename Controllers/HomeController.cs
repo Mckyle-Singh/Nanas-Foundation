@@ -63,6 +63,12 @@ namespace Nanas_Foundation.Controllers
             return View();
         }
 
+        public IActionResult NewsEvents()
+        {
+            // Later you can inject services to fetch events and blog data
+            return View();
+        }
+
         public IActionResult Help()
         {
             return View();
