@@ -1,0 +1,106 @@
+﻿@model List<Nanas_Foundation.Models.BlogPost>
+
+@{
+    ViewData["Title"] = "Blog Posts";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Header Section -->
+<section class="admin-header py-4">
+    <div class="container d-flex justify-content-between align-items-center">
+        <h2 class="fw-bold">
+            <i class="bi bi-tools me-2"></i>Manage Blog Posts
+        </h2>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add New Post
+        </a>
+    </div>
+</section>
+
+<!-- Search/Filter Section -->
+<section class="admin-search py-3">
+    <div class="container">
+        <form method="get">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Search by title or author..." />
+                <button type="submit" class="btn btn-outline-secondary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Blog Table Section -->
+<section class="admin-table py-4">
+    <div class="container">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning">No blog posts found.</div>
+        }
+        else
+        {
+            <table class="table table-borderless align-middle shadow-sm">
+                <thead class="table-light">
+                    <tr>
+                        <th><i class="bi bi-person"></i> Author</th>
+                        <th><i class="bi bi-journal-text"></i> Title</th>
+                        <th><i class="bi bi-envelope"></i> Email</th>
+                        <th><i class="bi bi-link-45deg"></i> Website</th>
+                        <th><i class="bi bi-calendar"></i> Created</th>
+                        <th><i class="bi bi-file-earmark-pdf"></i> PDF</th>
+                        <th><i class="bi bi-image"></i> Photo</th>
+                        <th class="text-end"><i class="bi bi-gear"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var post in Model)
+                    {
+                        <tr>
+                            <td>@post.AuthorName</td>
+                            <td><strong>@post.Title</strong></td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(post.AuthorEmail))
+                                {
+                                    <a href="mailto:@post.AuthorEmail">@post.AuthorEmail</a>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(post.WebsiteLink))
+                                {
+                                    <a href="@post.WebsiteLink" target="_blank">@post.WebsiteLink</a>
+                                }
+                            </td>
+                            <td>@post.CreatedAt.ToString("dd MMM yyyy")</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(post.PdfFilePath))
+                                {
+                                    <a href="@post.PdfFilePath" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-file-earmark-pdf"></i> View
+                                    </a>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(post.ProfilePhotoPath))
+                                {
+                                    <img src="@post.ProfilePhotoPath" class="rounded-circle" style="height:40px; width:40px; object-fit:cover;" />
+                                }
+                            </td>
+                            <td class="text-end">
+                                <div class="d-inline-flex gap-2">
+                                    <a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-sm btn-warning" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@post.Id" class="btn btn-sm btn-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</section>
+
