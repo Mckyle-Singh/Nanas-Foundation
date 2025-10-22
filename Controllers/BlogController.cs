@@ -69,5 +69,7 @@ namespace Nanas_Foundation.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Event");
         }
+
+
     }
 }

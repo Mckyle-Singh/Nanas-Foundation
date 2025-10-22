@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "Blog Posts";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Header Section -->
+<section class="admin-header py-4">
+    <div class="container d-flex justify-content-between align-items-center">
+        <h2 class="fw-bold">
+            <i class="bi bi-tools me-2"></i>Manage Blog Posts
+        </h2>
+        <a href="#" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add New Post
+        </a>
+    </div>
+</section>
+
+<!-- Search/Filter Section -->
+<section class="admin-search py-3">
+    <div class="container">
+        <form method="get">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Search by title or author..." />
+                <button type="submit" class="btn btn-outline-secondary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Blog Table Section -->
+<section class="admin-table py-4">
+    <div class="container">
+        <table class="table table-borderless align-middle shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th><i class="bi bi-person"></i> Author</th>
+                    <th><i class="bi bi-journal-text"></i> Title</th>
+                    <th><i class="bi bi-envelope"></i> Email</th>
+                    <th><i class="bi bi-link-45deg"></i> Website</th>
+                    <th><i class="bi bi-calendar"></i> Created</th>
+                    <th><i class="bi bi-file-earmark-pdf"></i> PDF</th>
+                    <th><i class="bi bi-image"></i> Photo</th>
+                    <th class="text-end"><i class="bi bi-gear"></i> Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Thandi Moyo</td>
+                    <td><strong>Eco-Friendly Gardening</strong></td>
+                    <td><a href="mailto:thandi.moyo@example.com">thandi.moyo@example.com</a></td>
+                    <td><a href="https://thandigrows.com" target="_blank">thandigrows.com</a></td>
+                    <td>14 Oct 2025</td>
+                    <td>
+                        <a href="/uploads/blogs/gardening.pdf" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-file-earmark-pdf"></i> View
+                        </a>
+                    </td>
+                    <td>
+                        <img src="/uploads/blogs/thandi.jpg" class="rounded-circle" style="height:40px; width:40px; object-fit:cover;" />
+                    </td>
+                    <td class="text-end">
+                        <a href="#" class="btn btn-sm btn-warning me-1" title="Edit">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm btn-danger" title="Delete">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sean Dlamini</td>
+                    <td><strong>Healthy Living Tips</strong></td>
+                    <td><a href="mailto:sean.dlamini@example.com">sean.dlamini@example.com</a></td>
+                    <td><a href="https://seandlamini.com" target="_blank">seandlamini.com</a></td>
+                    <td>12 Oct 2025</td>
+                    <td>
+                        <a href="/uploads/blogs/health.pdf" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-file-earmark-pdf"></i> View
+                        </a>
+                    </td>
+                    <td>
+                        <img src="/uploads/blogs/sean.jpg" class="rounded-circle" style="height:40px; width:40px; object-fit:cover;" />
+                    </td>
+                    <td class="text-end">
+                        <a href="#" class="btn btn-sm btn-warning me-1" title="Edit">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm btn-danger" title="Delete">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
