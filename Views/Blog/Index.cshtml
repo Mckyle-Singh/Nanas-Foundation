@@ -87,12 +87,14 @@
                                 }
                             </td>
                             <td class="text-end">
-                                <a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-sm btn-warning me-1" title="Edit">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a asp-action="Delete" asp-route-id="@post.Id" class="btn btn-sm btn-danger" title="Delete">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                <div class="d-inline-flex gap-2">
+                                    <a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-sm btn-warning" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@post.Id" class="btn btn-sm btn-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     }

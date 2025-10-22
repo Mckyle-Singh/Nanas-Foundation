@@ -74,6 +74,70 @@ namespace Nanas_Foundation.Controllers
             return RedirectToAction("Index", "Event");
         }
 
+
+        public IActionResult Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var blogPost = _context.BlogPosts.FirstOrDefault(b => b.Id == id);
+            if (blogPost == null)
+            {
+                return NotFound();
+            }
+
+            return View(blogPost);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, BlogPost updatedPost, IFormFile? PdfFile, IFormFile? ProfilePhoto)
+        {
+            if (id != updatedPost.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var existingPost = await _context.BlogPosts.FindAsync(id);
+                if (existingPost == null)
+                {
+                    return NotFound();
+                }
+
+                existingPost.Title = updatedPost.Title;
+                existingPost.AuthorName = updatedPost.AuthorName;
+                existingPost.AuthorEmail = updatedPost.AuthorEmail;
+                existingPost.WebsiteLink = updatedPost.WebsiteLink;
+                existingPost.CreatedAt = updatedPost.CreatedAt;
+
+                if (PdfFile != null && PdfFile.Length > 0)
+                {
+                    var pdfFileName = Path.GetFileName(PdfFile.FileName);
+                    var pdfPath = Path.Combine("wwwroot/uploads/blogs", pdfFileName);
+                    using var stream = new FileStream(pdfPath, FileMode.Create);
+                    await PdfFile.CopyToAsync(stream);
+                    existingPost.PdfFilePath = "/uploads/blogs/" + pdfFileName;
+                }
+
+                if (ProfilePhoto != null && ProfilePhoto.Length > 0)
+                {
+                    var photoFileName = Path.GetFileName(ProfilePhoto.FileName);
+                    var photoPath = Path.Combine("wwwroot/uploads/blogs", photoFileName);
+                    using var stream = new FileStream(photoPath, FileMode.Create);
+                    await ProfilePhoto.CopyToAsync(stream);
+                    existingPost.ProfilePhotoPath = "/uploads/blogs/" + photoFileName;
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(updatedPost);
+        }
+
         public IActionResult Delete(Guid? id)
         {
             if (id == null)
