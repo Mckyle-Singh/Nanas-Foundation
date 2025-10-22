@@ -1,0 +1,44 @@
+﻿@model Nanas_Foundation.Models.Donation
+@{
+    ViewData["Title"] = "Make a Donation";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["DonationError"] != null)
+{
+    <div class="alert alert-danger">@TempData["DonationError"]</div>
+}
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="Amount" class="form-label"></label>
+        <input asp-for="Amount" class="form-control" type="number" step="0.01" min="1" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Bank" class="form-label"></label>
+        <select asp-for="Bank" class="form-control">
+            <option value="">-- Select Bank --</option>
+            <option>FNB</option>
+            <option>Standard Bank</option>
+            <option>ABSA</option>
+            <option>Nedbank</option>
+        </select>
+        <span asp-validation-for="Bank" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Notes" class="form-label"></label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

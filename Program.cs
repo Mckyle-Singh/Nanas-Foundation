@@ -13,7 +13,12 @@ namespace Nanas_Foundation
         {
             var builder = WebApplication.CreateBuilder(args);
             Env.Load(); // Load .env file from root
-            // Add services to the container.
+                        // Add services to the container.
+
+            var stripeSecret = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
+            if (string.IsNullOrEmpty(stripeSecret)) throw new InvalidOperationException("STRIPE_SECRET_KEY not configured.");
+            Stripe.StripeConfiguration.ApiKey = stripeSecret;
+
             var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? throw new InvalidOperationException("Connection string 'DB_CONNECTION_STRING' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -54,7 +59,7 @@ namespace Nanas_Foundation
             app.UseRouting();
 
             app.UseAuthorization();
-
+            
             app.MapControllerRoute(
                 name: "areas",
                 pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
@@ -69,7 +74,6 @@ namespace Nanas_Foundation
                 var services = scope.ServiceProvider;
                 IdentitySeeder.SeedRolesAndAdminAsync(services).GetAwaiter().GetResult();
             }
-
             app.Run();
         }
     }
