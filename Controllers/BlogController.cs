@@ -16,7 +16,11 @@ namespace Nanas_Foundation.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var blogPosts = _context.BlogPosts
+                .OrderByDescending(b => b.CreatedAt)
+                .ToList();
+
+            return View(blogPosts);
         }
 
         [HttpGet]
