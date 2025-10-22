@@ -13,6 +13,7 @@ namespace Nanas_Foundation.Data
         }
         public DbSet<Event> Events { get; set; }
         public DbSet<Volunteer> Volunteers { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
 
     }
 }
