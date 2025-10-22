@@ -1,16 +1,20 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Nanas_Foundation.Data;
 using Nanas_Foundation.Models;
+using System.Diagnostics;
 
 namespace Nanas_Foundation.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -65,8 +69,13 @@ namespace Nanas_Foundation.Controllers
 
         public IActionResult NewsEvents()
         {
-            // Later you can inject services to fetch events and blog data
-            return View();
+            var upcomingEvents = _context.Events
+            .Where(e => e.Date >= DateTime.Today)
+            .OrderBy(e => e.Date)
+            .Take(4)
+            .ToList();
+
+            return View(upcomingEvents);
         }
 
         public IActionResult Help()
