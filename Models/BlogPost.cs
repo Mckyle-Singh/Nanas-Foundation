@@ -18,10 +18,10 @@ namespace Nanas_Foundation.Models
         [Url]
         public string WebsiteLink { get; set; }
 
-        [Required]
-        public string PdfFilePath { get; set; } // Path to uploaded PDF
+       // [Required]
+        public string ?PdfFilePath { get; set; } // Path to uploaded PDF
 
-        public string ProfilePhotoPath { get; set; } // Optional author image
+        public string ?ProfilePhotoPath { get; set; } // Optional author image
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }

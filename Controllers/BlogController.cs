@@ -26,7 +26,10 @@ namespace Nanas_Foundation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BlogPost model, IFormFile PdfFile, IFormFile ProfilePhoto)
+        public async Task<IActionResult> Create(
+           [Bind("AuthorName,AuthorEmail,WebsiteLink,Title")] BlogPost model,
+           IFormFile PdfFile,
+           IFormFile? ProfilePhoto) // make optional
         {
             if (!ModelState.IsValid || PdfFile == null)
             {
@@ -34,31 +37,37 @@ namespace Nanas_Foundation.Controllers
                 return View(model);
             }
 
-            // Save PDF
+            // ------------------ Save PDF ------------------
             var pdfPath = Path.Combine("uploads/blogs", Guid.NewGuid() + Path.GetExtension(PdfFile.FileName));
             var fullPdfPath = Path.Combine(_env.WebRootPath, pdfPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPdfPath)!);
+
             using (var stream = new FileStream(fullPdfPath, FileMode.Create))
             {
                 await PdfFile.CopyToAsync(stream);
             }
-            model.PdfFilePath = "/" + pdfPath.Replace("\\", "/");
 
-            // Save Profile Photo (optional)
+            model.PdfFilePath = "/" + pdfPath.Replace("\\", "/");
             if (ProfilePhoto != null)
             {
                 var photoPath = Path.Combine("uploads/blogs", Guid.NewGuid() + Path.GetExtension(ProfilePhoto.FileName));
                 var fullPhotoPath = Path.Combine(_env.WebRootPath, photoPath);
+                Directory.CreateDirectory(Path.GetDirectoryName(fullPhotoPath)!);
+
                 using (var stream = new FileStream(fullPhotoPath, FileMode.Create))
                 {
                     await ProfilePhoto.CopyToAsync(stream);
                 }
+
                 model.ProfilePhotoPath = "/" + photoPath.Replace("\\", "/");
             }
-
+            else
+            {
+                model.ProfilePhotoPath = "https://i.pravatar.cc/300";
+            }
             _context.BlogPosts.Add(model);
             await _context.SaveChangesAsync();
-
-            return RedirectToAction("Index", "Blog");
+            return RedirectToAction("Index", "Event");
         }
     }
 }
