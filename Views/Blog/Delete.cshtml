@@ -1,0 +1,18 @@
+﻿@model Nanas_Foundation.Models.BlogPost
+@{
+    ViewData["Title"] = "Delete Blog Post";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="py-4">
+    <div class="container">
+        <h2 class="text-danger mb-3"><i class="bi bi-trash"></i> Confirm Delete</h2>
+        <p>Are you sure you want to delete the blog post titled <strong>@Model.Title</strong> by <strong>@Model.AuthorName</strong>?</p>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger me-2">🗑 Delete</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</section>

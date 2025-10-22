@@ -74,6 +74,35 @@ namespace Nanas_Foundation.Controllers
             return RedirectToAction("Index", "Event");
         }
 
+        public IActionResult Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var blogPost = _context.BlogPosts.FirstOrDefault(b => b.Id == id);
+            if (blogPost == null)
+            {
+                return NotFound();
+            }
+
+            return View(blogPost);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(Guid id)
+        {
+            var blogPost = _context.BlogPosts.Find(id);
+            if (blogPost != null)
+            {
+                _context.BlogPosts.Remove(blogPost);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }
