@@ -75,7 +75,12 @@ namespace Nanas_Foundation.Controllers
             .Take(4)
             .ToList();
 
-            return View(upcomingEvents);
+            var recentBlogs = _context.BlogPosts
+            .OrderByDescending(b => b.CreatedAt)
+            .Take(4)
+            .ToList();
+
+            return View(Tuple.Create(upcomingEvents, recentBlogs));
         }
 
         public IActionResult Help()

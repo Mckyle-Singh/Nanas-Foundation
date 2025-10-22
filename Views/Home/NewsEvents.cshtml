@@ -1,4 +1,4 @@
-﻿@model List<Nanas_Foundation.Models.Event>
+﻿@model Tuple<List<Nanas_Foundation.Models.Event>, List<Nanas_Foundation.Models.BlogPost>>
 @{
     ViewData["Title"] = "News & Events";
 }
@@ -27,7 +27,7 @@
             <p class="lead text-muted">Find fun and engaging activities to participate in</p>
         </div>
         <div class="row">
-            @foreach (var e in Model)
+            @foreach (var e in Model.Item1)
             {
                 <div class="col-lg-6 mb-4">
                     <div class="event-card">
@@ -56,68 +56,31 @@
             <p class="lead text-muted">Explore stories, insights, and resources that support mental wellness and community growth</p>
         </div>
         <div class="row">
-            <!-- Blog 1 -->
-            <div class="col-lg-6 mb-4">
-                <div class="event-card">
-                    <div class="d-flex align-items-start">
-                        <div class="me-3">
-                            <i class="bi bi-journal-richtext" style="font-size: 2rem; color: #DA5B34;"></i>
-                        </div>
-                        <div>
-                            <h4 class="event-title">Understanding Mental Health Stigma</h4>
-                            <p class="text-muted">Feb 1, 2023</p>
-                            <a href="https://example.com/blog-post-1" target="_blank" class="event-link">Read Full Article</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Blog 2 -->
-            <div class="col-lg-6 mb-4">
-                <div class="event-card">
-                    <div class="d-flex align-items-start">
-                        <div class="me-3">
-                            <i class="bi bi-people" style="font-size: 2rem; color: #DA5B34;"></i>
-                        </div>
-                        <div>
-                            <h4 class="event-title">The Importance of Mental Health Education</h4>
-                            <p class="text-muted">Jan 1, 2023</p>
-                            <a href="https://example.com/blog-post-2" target="_blank" class="event-link">Read Full Article</a>
+            @foreach (var blog in Model.Item2)
+            {
+                <div class="col-lg-6 mb-4">
+                    <div class="event-card">
+                        <div class="d-flex align-items-start">
+                            <div class="me-3">
+                                @if (!string.IsNullOrEmpty(blog.ProfilePhotoPath))
+                                {
+                                    <img src="@blog.ProfilePhotoPath" alt="Author Photo" class="rounded-circle" style="height: 48px; width: 48px; object-fit: cover;" />
+                                }
+                                else
+                                {
+                                    <i class="bi bi-person-circle" style="font-size: 2rem; color: #DA5B34;"></i>
+                                }
+                            </div>
+                            <div>
+                                <h4 class="event-title">@blog.Title</h4>
+                                <p class="text-muted">@blog.CreatedAt.ToString("MMM d, yyyy")</p>
+                                <p class="mb-1"><strong>By:</strong> @blog.AuthorName</p>
+                                <a href="@blog.WebsiteLink" target="_blank" class="event-link">Read Full Article</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Blog 3 -->
-            <div class="col-lg-6 mb-4">
-                <div class="event-card">
-                    <div class="d-flex align-items-start">
-                        <div class="me-3">
-                            <i class="bi bi-calendar-check" style="font-size: 2rem; color: #DA5B34;"></i>
-                        </div>
-                        <div>
-                            <h4 class="event-title">Tips for Effective Stress Management</h4>
-                            <p class="text-muted">Dec 1, 2022</p>
-                            <a href="https://example.com/blog-post-3" target="_blank" class="event-link">Read Full Article</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog 4 -->
-            <div class="col-lg-6 mb-4">
-                <div class="event-card">
-                    <div class="d-flex align-items-start">
-                        <div class="me-3">
-                            <i class="bi bi-pencil-square" style="font-size: 2rem; color: #DA5B34;"></i>
-                        </div>
-                        <div>
-                            <h4 class="event-title">How Journaling Can Improve Your Mental Health</h4>
-                            <p class="text-muted">Nov 15, 2022</p>
-                            <a href="https://example.com/blog-post-4" target="_blank" class="event-link">Read Full Article</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
