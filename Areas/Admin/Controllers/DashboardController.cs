@@ -32,6 +32,9 @@ namespace Nanas_Foundation.Areas.Admin.Controllers
                 .OrderBy(m => DateTime.ParseExact(m.MonthName, "MMM", CultureInfo.InvariantCulture).Month)
                 .ToList();
 
+            var totalDonations = monthlyTotals.Sum(m => m.TotalAmount);
+            ViewBag.TotalDonations = totalDonations;
+
             return View(monthlyTotals);
 
         }
