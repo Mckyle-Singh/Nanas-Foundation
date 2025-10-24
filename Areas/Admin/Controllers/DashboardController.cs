@@ -35,6 +35,13 @@ namespace Nanas_Foundation.Areas.Admin.Controllers
             var totalDonations = monthlyTotals.Sum(m => m.TotalAmount);
             ViewBag.TotalDonations = totalDonations;
 
+            // Events planned for the year
+            var eventsPlanned = _context.Events
+                .Where(e => e.Date.Year == currentYear)
+                .Count();
+            ViewBag.EventsPlanned = eventsPlanned;
+
+
             return View(monthlyTotals);
 
         }
