@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<Nanas_Foundation.Areas.Admin.ViewModels.MonthlyDonationViewModel>
+
+@{
     ViewData["Title"] = "Impact Dashboard";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
@@ -20,9 +22,9 @@
     <div class="row text-center mb-4">
         <div class="col-md-3">
             <div class="bg-light p-3 rounded shadow-sm">
-                <i class="bi bi-mic-fill fs-2 text-danger mb-2"></i>
-                <h4 class="fw-bold">52</h4>
-                <p class="text-muted">Speeches Conducted</p>
+                <i class="bi bi-cash-coin fs-2 text-danger mb-2"></i>
+                <h4 class="fw-bold">R@(String.Format("{0:N0}", ViewBag.TotalDonations))</h4>
+                <p class="text-muted">Total Donations Yearly</p>
             </div>
         </div>
         <div class="col-md-3">
@@ -35,8 +37,8 @@
         <div class="col-md-3">
             <div class="bg-light p-3 rounded shadow-sm">
                 <i class="bi bi-easel-fill fs-2 text-danger mb-2"></i>
-                <h4 class="fw-bold">18</h4>
-                <p class="text-muted">Workshops Facilitated</p>
+                <h4 class="fw-bold">@ViewBag.EventsPlanned</h4>
+                <p class="text-muted">Events Planned</p>
             </div>
         </div>
         <div class="col-md-3">
@@ -48,29 +50,45 @@
         </div>
     </div>
 
-    <!-- Placeholder Graph -->
+    <!-- Monthly Donations Chart -->
     <div class="row mb-4">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="bg-white p-4 rounded shadow-sm">
-                <h5 class="fw-bold mb-3">Monthly Reach</h5>
-                <img src="https://placehold.co/400x400" class="img-fluid" alt="Monthly Reach Graph" />
-                <p class="mt-2 text-muted">Understand common rephostatisical and fit the methods at the...</p>
-                <a href="#" class="btn btn-sm btn-outline-danger">Read Article</a>
-            </div>
-        </div>
-
-        <!-- Pie Chart -->
-        <div class="col-md-6">
-            <div class="bg-white p-4 rounded shadow-sm">
-                <h5 class="fw-bold mb-3">Sessions by Type</h5>
-                <img src="https://placehold.co/400x400" class="img-fluid mb-2" alt="Session Types" />
-                <ul class="list-unstyled text-muted">
-                    <li><span class="text-danger fw-bold">●</span> Outreach: 50%</li>
-                    <li><span class="text-warning fw-bold">●</span> Education: 35%</li>
-                    <li><span class="text-info fw-bold">●</span> Advocacy: 15%</li>
-                </ul>
-                <a href="#" class="btn btn-sm btn-outline-danger">View Resource</a>
+                <h5 class="fw-bold mb-3">Monthly Donations</h5>
+                <canvas id="donationChart" height="120"></canvas>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('donationChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.Select(m => m.MonthName))),
+                datasets: [{
+                    label: 'Donations (ZAR)',
+                    data: @Html.Raw(Json.Serialize(Model.Select(m => m.TotalAmount))),
+                    backgroundColor: 'rgba(220, 53, 69, 0.7)',
+                    borderColor: 'rgba(220, 53, 69, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return 'R' + value;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}
