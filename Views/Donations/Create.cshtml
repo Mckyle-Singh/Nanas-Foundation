@@ -3,42 +3,42 @@
     ViewData["Title"] = "Make a Donation";
 }
 
-<h2>@ViewData["Title"]</h2>
+<!-- Donation Container -->
+<div class="auth-container">
+    <h1 class="auth-title">Make a Donation</h1>
+    <div class="auth-card">
+        @if (TempData["DonationError"] != null)
+        {
+            <div class="alert alert-danger">@TempData["DonationError"]</div>
+        }
 
-@if (TempData["DonationError"] != null)
-{
-    <div class="alert alert-danger">@TempData["DonationError"]</div>
-}
+        <form asp-action="Create" method="post" class="auth-form">
+            @Html.AntiForgeryToken()
 
-<form asp-action="Create" method="post">
-    @Html.AntiForgeryToken()
+            <div class="form-floating mb-3">
+                <input asp-for="Amount" class="form-control" type="number" step="0.01" min="1" placeholder="Amount" />
+                <label asp-for="Amount">Amount</label>
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
 
-    <div class="mb-3">
-        <label asp-for="Amount" class="form-label"></label>
-        <input asp-for="Amount" class="form-control" type="number" step="0.01" min="1" />
-        <span asp-validation-for="Amount" class="text-danger"></span>
+            <div class="form-floating mb-3">
+                <select asp-for="Bank" class="form-select">
+                    <option value="">-- Select Bank --</option>
+                    <option>FNB</option>
+                    <option>Standard Bank</option>
+                    <option>ABSA</option>
+                    <option>Nedbank</option>
+                </select>
+                <label asp-for="Bank">Bank (Optional)</label>
+                <span asp-validation-for="Bank" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea asp-for="Notes" class="form-control" placeholder="Share Your Experience" style="height: 100px;"></textarea>
+                <label asp-for="Notes">Notes</label>
+            </div>
+
+            <button type="submit" class="auth-submit-btn">Proceed to Payment</button>
+        </form>
     </div>
-
-    <div class="mb-3">
-        <label asp-for="Bank" class="form-label"></label>
-        <select asp-for="Bank" class="form-control">
-            <option value="">-- Select Bank --</option>
-            <option>FNB</option>
-            <option>Standard Bank</option>
-            <option>ABSA</option>
-            <option>Nedbank</option>
-        </select>
-        <span asp-validation-for="Bank" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Notes" class="form-label"></label>
-        <textarea asp-for="Notes" class="form-control"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Proceed to Payment</button>
-</form>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+</div>

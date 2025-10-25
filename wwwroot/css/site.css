@@ -594,9 +594,10 @@ body {
 }
 
 .auth-submit-btn:hover {
-    background: #b8472a;
+    background: #c24e2c;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(218, 91, 52, 0.4);
+
 }
 
 .auth-link {

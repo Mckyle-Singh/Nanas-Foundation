@@ -67,23 +67,35 @@
                 <div class="row">
                     <div class="col-md-4 mb-4">
                         <div class="event-card text-center">
-                            <h5 class="event-title">$25</h5>
+                            <h5 class="event-title">R25</h5>
                             <p>Provides one counseling session for a young person in need</p>
-                            <button class="btn btn-light" style="background: #DA5B34; color: white; border: none; width: 100%;">Donate $25</button>
+                            <button type="button" class="btn btn-light"
+                                    style="background: #DA5B34; color: white; border: none; width: 100%;"
+                                    onclick="window.location.href='@Url.Action("Create", "Donations", new { amount = 25 })'">
+                                Donate $25
+                            </button>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="event-card text-center">
-                            <h5 class="event-title">$50</h5>
+                            <h5 class="event-title">R50</h5>
                             <p>Funds educational materials for one mental health workshop</p>
-                            <button class="btn btn-light" style="background: #DA5B34; color: white; border: none; width: 100%;">Donate $50</button>
+                            <button type="button" class="btn btn-light"
+                                    style="background: #DA5B34; color: white; border: none; width: 100%;"
+                                    onclick="window.location.href='@Url.Action("Create", "Donations", new { amount = 50 })'">
+                                Donate $50
+                            </button>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="event-card text-center">
-                            <h5 class="event-title">$100</h5>
+                            <h5 class="event-title">R100</h5>
                             <p>Supports crisis intervention services for one month</p>
-                            <button class="btn btn-light" style="background: #DA5B34; color: white; border: none; width: 100%;">Donate $100</button>
+                            <button type="button" class="btn btn-light"
+                                    style="background: #DA5B34; color: white; border: none; width: 100%;"
+                                    onclick="window.location.href='@Url.Action("Create", "Donations", new { amount = 100 })'">
+                                Donate $100
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -95,9 +107,14 @@
                         <div class="row justify-content-center">
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text">$</span>
+                                    <span class="input-group-text">R</span>
                                     <input type="number" class="form-control" placeholder="Enter amount" min="1">
-                                    <button class="btn btn-light" style="background: #DA5B34; color: white; border: none;">Donate</button>
+                                    <button type="button"
+                                            class="btn btn-light"
+                                            style="background: #DA5B34; color: white; border: none;"
+                                            onclick="redirectWithAmount()">
+                                        Donate
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -234,3 +251,19 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        function redirectWithAmount() {
+            const input = document.querySelector('#donation-section input[type="number"]');
+            const amount = input ? input.value.trim() : "";
+
+            if (amount && parseFloat(amount) > 0) {
+                const url = '@Url.Action("Create", "Donations")' + '?amount=' + amount;
+                window.location.href = url;
+            } else {
+                alert('Please enter a valid amount before donating.');
+            }
+        }
+    </script>
+}
