@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Nanas_Foundation.Data;
 using Nanas_Foundation.Models;
 using Stripe;
 using Stripe.Checkout;
+using Stripe.V2;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nanas_Foundation.Controllers
 {
@@ -32,7 +33,7 @@ namespace Nanas_Foundation.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(decimal? amount)
         {
             // Manual guard: redirect to Home/Index with message if NOT logged in
             if (!User.Identity?.IsAuthenticated ?? true)
@@ -42,7 +43,12 @@ namespace Nanas_Foundation.Controllers
             }
 
             ViewBag.Banks = new[] { "FNB", "Standard Bank", "ABSA", "Nedbank" };
-            return View();
+            var model = new Donation();
+
+            if (amount.HasValue)
+                model.Amount = amount.Value;
+
+            return View(model);
         }
 
         [HttpPost]
