@@ -19,7 +19,13 @@ namespace Nanas_Foundation.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var latestEvent = _context.Events
+            .Where(e => e.Date >= DateTime.Today)
+            .OrderBy(e => e.Date)
+            .FirstOrDefault();
+
+            return View(latestEvent);
+
         }
 
         public IActionResult Privacy()
