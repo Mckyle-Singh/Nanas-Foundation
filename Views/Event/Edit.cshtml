@@ -1,56 +1,69 @@
-﻿@model Nanas_Foundation.Models.Event
+@model Nanas_Foundation.Models.Event
 
 @{
     ViewData["Title"] = "Edit Event";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold text-danger"><i class="bi bi-pencil-square"></i> Edit Event</h2>
-        <a asp-action="Index" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left-circle"></i> Back to Events
+<!-- Header Section -->
+<div class="admin-header">
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h1>EDIT EVENT</h1>
+            <h2 class="subtitle">Update Event</h2>
+            <p class="description">Modify the event details and save changes</p>
+        </div>
+        <a asp-action="Index" class="btn btn-admin-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Events
         </a>
     </div>
+</div>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <form asp-action="Edit" method="post">
-                <input type="hidden" asp-for="Id" />
+<!-- Main Content -->
+<div class="container-fluid px-4" style="max-width: none;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="admin-form">
+                <form asp-action="Edit" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Title" class="form-label">Event Title *</label>
+                            <input asp-for="Title" class="form-control" placeholder="Enter event title" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                    </div>
 
-                <div class="mb-3">
-                    <label asp-for="Title" class="form-label fw-semibold">Title</label>
-                    <input asp-for="Title" class="form-control" />
-                    <span asp-validation-for="Title" class="text-danger"></span>
-                </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Date" class="form-label">Event Date & Time *</label>
+                            <input asp-for="Date" type="datetime-local" class="form-control" />
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Location" class="form-label">Location *</label>
+                            <input asp-for="Location" class="form-control" placeholder="Enter event location" />
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div>
 
-                <div class="mb-3">
-                    <label asp-for="Description" class="form-label fw-semibold">Description</label>
-                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
+                    <div class="mb-4">
+                        <label asp-for="Description" class="form-label">Event Description *</label>
+                        <textarea asp-for="Description" class="form-control" rows="5" placeholder="Describe the event details, objectives, and any special instructions..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
 
-                <div class="mb-3">
-                    <label asp-for="Date" class="form-label fw-semibold">Date</label>
-                    <input asp-for="Date" type="datetime-local" class="form-control" />
-                    <span asp-validation-for="Date" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Location" class="form-label fw-semibold">Location</label>
-                    <input asp-for="Location" class="form-control" />
-                    <span asp-validation-for="Location" class="text-danger"></span>
-                </div>
-
-                <div class="d-flex justify-content-end gap-2">
-                    <button type="submit" class="btn" style="background-color: #DA5B34; color: #fff; border: none;">
-                        <i class="bi bi-check-circle"></i> Update
-                    </button>
-                    <a asp-action="Index" class="btn btn-outline-danger">
-                        <i class="bi bi-x-circle"></i> Cancel
-                    </a>
-                </div>
-            </form>
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn btn-admin-primary">
+                            <i class="bi bi-check-circle me-2"></i>Update Event
+                        </button>
+                        <a asp-action="Index" class="btn btn-admin-secondary">
+                            <i class="bi bi-x-circle me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

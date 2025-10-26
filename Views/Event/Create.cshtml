@@ -1,38 +1,70 @@
-﻿@model Nanas_Foundation.Models.Event
+@model Nanas_Foundation.Models.Event
 
 @{
     ViewData["Title"] = "Create Event";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Create Event</h2>
-
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Title" class="control-label"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+<!-- Header Section -->
+<div class="admin-header">
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h1>CREATE EVENT</h1>
+            <h2 class="subtitle">New Event</h2>
+            <p class="description">Add a new event to the foundation calendar</p>
+        </div>
+        <a asp-action="Index" class="btn btn-admin-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Events
+        </a>
     </div>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Description" class="control-label"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
+<!-- Main Content -->
+<div class="container-fluid px-4" style="max-width: none;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="admin-form">
+                <form asp-action="Create" method="post">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Title" class="form-label">Event Title *</label>
+                            <input asp-for="Title" class="form-control" placeholder="Enter event title" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Date" class="form-label">Event Date & Time *</label>
+                            <input asp-for="Date" type="datetime-local" class="form-control" />
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Location" class="form-label">Location *</label>
+                            <input asp-for="Location" class="form-control" placeholder="Enter event location" />
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Description" class="form-label">Event Description *</label>
+                        <textarea asp-for="Description" class="form-control" rows="5" placeholder="Describe the event details, objectives, and any special instructions..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn btn-admin-primary">
+                            <i class="bi bi-check-circle me-2"></i>Create Event
+                        </button>
+                        <a asp-action="Index" class="btn btn-admin-secondary">
+                            <i class="bi bi-x-circle me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="Date" class="control-label"></label>
-        <input asp-for="Date" type="datetime-local" class="form-control" />
-        <span asp-validation-for="Date" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Location" class="control-label"></label>
-        <input asp-for="Location" class="form-control" />
-        <span asp-validation-for="Location" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save Event</button>
-</form>
+</div>
 
 @section Scripts {
     @{

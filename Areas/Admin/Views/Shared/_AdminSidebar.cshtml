@@ -1,32 +1,39 @@
-﻿@*
+@*
     Sidebar partial for admin layout
     Included in _AdminLayout.cshtml
 *@
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white vh-100" style="width: 250px; background-color: #DA5B34;">
-    <a href="/Admin/Dashboard" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <span class="fs-4">Nanas Admin</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
+<div class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-brand text-center py-4">
+        <i class="bi bi-heart-fill text-white"></i>
+        <h4 class="text-white mb-0">NANA'S</h4>
+        <small>FOUNDATION</small>
+    </div>
+    
+    <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a href="/Admin/Dashboard" class="nav-link text-white">
-                <i class="bi bi-house-door-fill me-2"></i> Dashboard
+            <a href="/Admin/Dashboard" class="nav-link">
+                <i class="bi bi-speedometer2"></i> Dashboard
             </a>
         </li>
-        <li>
-            <a asp-area="" asp-controller="Event" asp-action="Index" class="nav-link text-white">
-                <i class="bi bi-calendar-event-fill me-2"></i> Events
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Event" asp-action="Index" class="nav-link">
+                <i class="bi bi-calendar-event"></i> Events
             </a>
         </li>
-        <li>
-            <a asp-area="" asp-controller="Blog" asp-action="Index" class="nav-link text-white">
-                <i class="bi bi-calendar-event-fill me-2"></i> Blogs
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Blog" asp-action="Index" class="nav-link">
+                <i class="bi bi-journal-text"></i> Blog Posts
             </a>
         </li>
-        <li class="nav-item mt-3">
-            <form method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/">
-                <button type="submit" class="nav-link text-white btn btn-link p-0 text-start">
-                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="bi bi-people"></i> Users
+            </a>
+        </li>
+        <li class="nav-item mt-4">
+            <form method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" class="d-inline w-100">
+                <button type="submit" class="nav-link btn btn-link text-start w-100 border-0" style="color: rgba(255,255,255,0.9); background: none; padding: 12px 25px;">
+                    <i class="bi bi-box-arrow-right"></i> Sign out
                 </button>
             </form>
         </li>
