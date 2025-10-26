@@ -1,61 +1,113 @@
-﻿@model List<Nanas_Foundation.Areas.Admin.ViewModels.MonthlyDonationViewModel>
+@model List<Nanas_Foundation.Areas.Admin.ViewModels.MonthlyDonationViewModel>
 
 @{
     ViewData["Title"] = "Impact Dashboard";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container-fluid">
-    <h1 class="text-danger fw-bold mb-2">IMPACT DASHBOARD</h1>
-    <h2 class="fw-semibold text-dark mb-1">Tracking Our Progress</h2>
-    <p class="text-muted mb-4">An overview of our initiatives and their outcomes.</p>
+<!-- Header Section -->
+<div class="admin-header">
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h1>IMPACT DASHBOARD</h1>
+            <h2 class="subtitle">Tracking Our Progress</h2>
+            <p class="description">An overview of our initiatives and their outcomes</p>
+        </div>
+    </div>
+</div>
 
+<!-- Main Content -->
+<div class="container-fluid px-4" style="max-width: none;">
     <!-- Search Bar -->
-    <div class="input-group mb-4" style="max-width: 400px;">
-        <input type="text" class="form-control" placeholder="Search resources..." />
-        <button class="btn btn-outline-secondary" type="button">
-            <i class="bi bi-search"></i>
-        </button>
+    <div class="mb-4">
+        <div class="admin-search-bar input-group">
+            <input type="text" class="form-control" placeholder="Search resources..." />
+            <button class="btn" type="button">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
     </div>
 
     <!-- Metrics Summary -->
-    <div class="row text-center mb-4">
-        <div class="col-md-3">
-            <div class="bg-light p-3 rounded shadow-sm">
-                <i class="bi bi-cash-coin fs-2 text-danger mb-2"></i>
-                <h4 class="fw-bold">R@(String.Format("{0:N0}", ViewBag.TotalDonations))</h4>
-                <p class="text-muted">Total Donations Yearly</p>
+    <div class="row mb-5">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="dashboard-card text-center">
+                <i class="bi bi-megaphone card-icon"></i>
+                <div class="card-number">52</div>
+                <div class="card-label">Speeches Conducted</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="bg-light p-3 rounded shadow-sm">
-                <i class="bi bi-people-fill fs-2 text-danger mb-2"></i>
-                <h4 class="fw-bold">1,250</h4>
-                <p class="text-muted">Individuals Reached</p>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="dashboard-card text-center">
+                <i class="bi bi-people card-icon"></i>
+                <div class="card-number">1,250</div>
+                <div class="card-label">Individuals Reached</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="bg-light p-3 rounded shadow-sm">
-                <i class="bi bi-easel-fill fs-2 text-danger mb-2"></i>
-                <h4 class="fw-bold">@ViewBag.EventsPlanned</h4>
-                <p class="text-muted">Events Planned</p>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="dashboard-card text-center">
+                <i class="bi bi-lightbulb card-icon"></i>
+                <div class="card-number">18</div>
+                <div class="card-label">Workshops Facilitated</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="bg-light p-3 rounded shadow-sm">
-                <i class="bi bi-person-heart fs-2 text-danger mb-2"></i>
-                <h4 class="fw-bold">65</h4>
-                <p class="text-muted">Volunteers Engaged</p>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="dashboard-card text-center">
+                <i class="bi bi-hand-thumbs-up card-icon"></i>
+                <div class="card-number">65</div>
+                <div class="card-label">Volunteers engaged</div>
             </div>
         </div>
     </div>
 
-    <!-- Monthly Donations Chart -->
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <div class="bg-white p-4 rounded shadow-sm">
-                <h5 class="fw-bold mb-3">Monthly Donations</h5>
-                <canvas id="donationChart" height="120"></canvas>
+    <!-- Charts Section -->
+    <div class="row">
+        <!-- Monthly Reach Chart -->
+        <div class="col-lg-7 mb-4">
+            <div class="chart-container">
+                <h5>Monthly Reach</h5>
+                <div class="monthly-reach-chart">
+                    <canvas id="monthlyReachChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sessions by Type -->
+        <div class="col-lg-5 mb-4">
+            <div class="chart-container">
+                <h5>Sessions by Type</h5>
+                <div class="sessions-chart-wrapper">
+                    <div class="pie-chart-container">
+                        <canvas id="sessionsChart" width="200" height="200"></canvas>
+                        <div class="chart-center-button">
+                            <button class="btn btn-admin-secondary btn-sm">View Resource</button>
+                        </div>
+                    </div>
+                    <div class="pie-chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #FF6B35;"></div>
+                            <span class="legend-label">Outreach</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #F7931E;"></div>
+                            <span class="legend-label">Education</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #FFD23F;"></div>
+                            <span class="legend-label">Advocacy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Info Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="chart-container">
+                <h6 class="text-muted mb-3">Understand common rephonstaticisl and facts about the</h6>
+                <a href="#" class="text-danger fw-semibold">Read Article</a>
             </div>
         </div>
     </div>
@@ -64,28 +116,70 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('donationChart').getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'bar',
+        // Monthly Reach Line Chart
+        const monthlyReachCtx = document.getElementById('monthlyReachChart').getContext('2d');
+        const monthlyReachChart = new Chart(monthlyReachCtx, {
+            type: 'line',
             data: {
-                labels: @Html.Raw(Json.Serialize(Model.Select(m => m.MonthName))),
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
-                    label: 'Donations (ZAR)',
-                    data: @Html.Raw(Json.Serialize(Model.Select(m => m.TotalAmount))),
-                    backgroundColor: 'rgba(220, 53, 69, 0.7)',
-                    borderColor: 'rgba(220, 53, 69, 1)',
-                    borderWidth: 1
+                    label: 'Monthly Reach',
+                    data: [300, 450, 600, 750, 800, 900, 950, 1000, 1100, 1200, 1250, 1200],
+                    borderColor: '#DA5B34',
+                    backgroundColor: 'rgba(218, 91, 52, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                aspectRatio: 3,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
+                        max: 1400,
+                        grid: {
+                            color: '#f1f3f4'
+                        },
                         ticks: {
-                            callback: function(value) {
-                                return 'R' + value;
-                            }
+                            stepSize: 200
                         }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Sessions by Type Pie Chart
+        const sessionsCtx = document.getElementById('sessionsChart').getContext('2d');
+        const sessionsChart = new Chart(sessionsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Outreach', 'Education', 'Advocacy'],
+                datasets: [{
+                    data: [50, 30, 15],
+                    backgroundColor: ['#FF6B35', '#F7931E', '#FFD23F'],
+                    borderWidth: 0,
+                    cutout: '65%'
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
                     }
                 }
             }
