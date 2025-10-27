@@ -44,11 +44,28 @@
             <h2 class="mission-title">Get in Touch</h2>
             <p class="lead text-muted">We’re here to listen, support, and collaborate</p>
         </div>
+        <!-- Success Message -->
+        @if (TempData["MessageSent"] != null)
+        {
+            <div id="success-alert" class="alert alert-success text-center" role="alert">
+                Thank you for reaching out! We’ve received your message.
+            </div>
+
+            <script>
+                setTimeout(function () {
+                    const alert = document.getElementById('success-alert');
+                    if (alert) {
+                        alert.classList.add('fade');
+                        setTimeout(() => alert.remove(), 500); // Remove after fade
+                    }
+                }, 4000); // 4 seconds before fade starts
+            </script>
+        }
 
         <div class="row">
             <!-- Contact Form -->
             <div class="col-lg-6 mb-4">
-                <form>
+                <form asp-action="ContactUs" method="post">
                     <div class="mb-3">
                         <label for="name" class="form-label">Full Name</label>
                         <input type="text" class="form-control" id="name" placeholder="Your name" required>
