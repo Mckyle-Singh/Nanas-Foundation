@@ -73,6 +73,11 @@ namespace Nanas_Foundation.Controllers
             return View();
         }
 
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
         public IActionResult NewsEvents()
         {
             var upcomingEvents = _context.Events
