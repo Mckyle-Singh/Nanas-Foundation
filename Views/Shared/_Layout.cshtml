@@ -14,11 +14,18 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
             <div class="container">
-                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">LOGO</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand d-flex align-items-center gap-2" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-heart-fill text-danger fs-4"></i>
+                    <span class="fw-bold" style="color: #DA5B34;">NANA'S</span>
+                    <small class="text-muted">FOUNDATION</small>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
@@ -45,6 +52,8 @@
                                 <li><a class="dropdown-item" asp-controller="Donations" asp-action="Create">Make Donation</a></li>
                             </ul>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <partial name="_LoginPartial" />
                         </li>
@@ -76,8 +85,7 @@
                         <ul>
                             <li><a asp-area="" asp-controller="Home" asp-action="Mission"><i class="bi bi-arrow-right"></i>Our Mission</a></li>
                             <li><a asp-area="" asp-controller="Home" asp-action="About"><i class="bi bi-arrow-right"></i>Our Story</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Team"><i class="bi bi-arrow-right"></i>Our Team</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Contact"><i class="bi bi-arrow-right"></i>Contact Us</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="ContactUs"><i class="bi bi-arrow-right"></i>Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
@@ -86,9 +94,7 @@
                         <h5>Resources</h5>
                         <ul>
                             <li><a asp-area="" asp-controller="Home" asp-action="Privacy"><i class="bi bi-arrow-right"></i>Privacy Policy</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Help"><i class="bi bi-arrow-right"></i>Help Center</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="Blog"><i class="bi bi-arrow-right"></i>Blog</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="FAQ"><i class="bi bi-arrow-right"></i>FAQ</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="NewsEvents"><i class="bi bi-arrow-right"></i>Blog</a></li>
                         </ul>
                     </div>
                 </div>
