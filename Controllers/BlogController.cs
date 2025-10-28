@@ -14,14 +14,34 @@ namespace Nanas_Foundation.Controllers
             _context = context;
             _env = env;
         }
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            var blogPosts = _context.BlogPosts
-                .OrderByDescending(b => b.CreatedAt)
-                .ToList();
+            try
+            {
+                var blogPosts = _context.BlogPosts.AsQueryable();
 
-            return View(blogPosts);
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    blogPosts = blogPosts.Where(b =>
+                        b.Title.Contains(search) ||
+                        b.AuthorName.Contains(search));
+                }
+
+                var result = blogPosts
+                    .OrderByDescending(b => b.CreatedAt)
+                    .ToList();
+
+                ViewData["SearchTerm"] = search;
+
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                return Content($"Error: {ex.Message}");
+            }
         }
+
+
 
         [HttpGet]
         public IActionResult Create()

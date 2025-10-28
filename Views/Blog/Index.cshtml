@@ -1,3 +1,5 @@
+@using Azure.Core
+
 @model List<Nanas_Foundation.Models.BlogPost>
 
 @{
@@ -25,7 +27,7 @@
     <div class="mb-4">
         <form method="get">
             <div class="admin-search-bar input-group">
-                <input type="text" name="search" class="form-control" placeholder="Search by title or author..." />
+                <input type="text" name="search" class="form-control" placeholder="Search by title or author..." value="@ViewData["SearchTerm"]" />
                 <button type="submit" class="btn">
                     <i class="bi bi-search"></i>
                 </button>
