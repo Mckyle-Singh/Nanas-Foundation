@@ -2,7 +2,7 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -17,25 +17,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 position-absolute w-100" style="z-index: 1000;">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="/">LOGO</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/">Our Mission</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/">Resources</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/">Get Involved</a></li>
-                    <li class="nav-item"><a class="nav-link login-link" href="/Identity/Account/Login">Log in</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
     <!-- Auth Container -->
     <div class="auth-container">
         <h1 class="auth-title">Sign Up</h1>
