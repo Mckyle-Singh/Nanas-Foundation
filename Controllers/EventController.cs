@@ -15,10 +15,25 @@ namespace Nanas_Foundation.Controllers
 
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            var events = _context.Events.ToList();
-            return View(events);
+            var events = _context.Events.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                events = events.Where(e =>
+                    e.Title.Contains(search)||
+                    e.Location.Contains(search));
+            }
+
+            var result = events
+                .OrderByDescending(e => e.Date)
+                .ToList();
+
+            ViewData["SearchTerm"] = search;
+
+            return View(result);
+
         }
         [HttpGet]
         public IActionResult Create()
