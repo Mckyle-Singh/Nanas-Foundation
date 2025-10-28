@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nanas_Foundation.Data;
 using Nanas_Foundation.Models;
 
@@ -14,15 +15,36 @@ namespace Nanas_Foundation.Controllers
             _context = context;
             _env = env;
         }
-        public IActionResult Index()
+        [Authorize(Roles = "Admin")]
+        public IActionResult Index(string search)
         {
-            var blogPosts = _context.BlogPosts
-                .OrderByDescending(b => b.CreatedAt)
-                .ToList();
+            try
+            {
+                var blogPosts = _context.BlogPosts.AsQueryable();
 
-            return View(blogPosts);
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    blogPosts = blogPosts.Where(b =>
+                        b.Title.Contains(search) ||
+                        b.AuthorName.Contains(search));
+                }
+
+                var result = blogPosts
+                    .OrderByDescending(b => b.CreatedAt)
+                    .ToList();
+
+                ViewData["SearchTerm"] = search;
+
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                return Content($"Error: {ex.Message}");
+            }
         }
 
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -74,7 +96,7 @@ namespace Nanas_Foundation.Controllers
             return RedirectToAction("Index", "Event");
         }
 
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -90,6 +112,8 @@ namespace Nanas_Foundation.Controllers
 
             return View(blogPost);
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, BlogPost updatedPost, IFormFile? PdfFile, IFormFile? ProfilePhoto)
@@ -138,6 +162,7 @@ namespace Nanas_Foundation.Controllers
             return View(updatedPost);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -154,6 +179,7 @@ namespace Nanas_Foundation.Controllers
             return View(blogPost);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(Guid id)

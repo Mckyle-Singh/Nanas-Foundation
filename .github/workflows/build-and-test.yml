@@ -28,6 +28,21 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
+    - name: 🔍 Pre-Test Environment Check
+      run: |
+        echo "📁 Current directory: $(pwd)"
+        echo "📦 .NET SDK version:"
+        dotnet --version
+
+        echo "🔍 Looking for .csproj files:"
+        find . -name "*.csproj"
+
+        echo "🧪 Checking for test projects:"
+        find . -type f -name "*Tests.csproj" || echo "⚠️ No test projects found"
+
+        echo "📂 Directory structure:"
+        tree -L 2 || ls -la
+
     - name: Run tests
       run: dotnet test --no-restore --verbosity normal
 
@@ -48,6 +63,3 @@ jobs:
     - name: Lint C# files (basic formatting check)
       run: |
         dotnet format --verify-no-changes || echo "Code formatting looks good"
-
-
-
