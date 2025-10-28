@@ -479,6 +479,24 @@ body {
     color: #DA5B34 !important;
 }
 
+/* Prevent nav items from wrapping */
+.navbar-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+/* Ensure nav links stay inline */
+.navbar .nav-link {
+    white-space: nowrap;
+}
+
+/* Optional: tighten spacing if needed */
+.navbar .nav-item {
+    padding: 0 4px;
+}
+
+
+
 /* Authentication Pages Styles */
 .auth-container {
     background: linear-gradient(135deg, #DA5B34 0%, #E67E22 100%);
