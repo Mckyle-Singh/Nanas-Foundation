@@ -93,6 +93,7 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
+
 .btn-outline-light {
     border: 2px solid white;
     color: white;
@@ -479,21 +480,6 @@ body {
     color: #DA5B34 !important;
 }
 
-/* Prevent nav items from wrapping */
-.navbar-nav {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-}
-
-/* Ensure nav links stay inline */
-.navbar .nav-link {
-    white-space: nowrap;
-}
-
-/* Optional: tighten spacing if needed */
-.navbar .nav-item {
-    padding: 0 4px;
-}
 
 
 
