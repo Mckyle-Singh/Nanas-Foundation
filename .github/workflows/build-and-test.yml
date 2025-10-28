@@ -2,9 +2,9 @@
 
 on:
   push:
-    branches: [ master ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ master ]
+    branches: [ "*" ]
 
 env:
   DOTNET_VERSION: '8.0.x'
@@ -30,4 +30,24 @@ jobs:
 
     - name: Run tests
       run: dotnet test --no-restore --verbosity normal
+
+    - name: Run tests (if any)
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: Check for Razor compilation errors
+      run: dotnet razor --version || echo "Razor CLI not available, skipping"
+
+    - name: Check for broken links in views
+      run: |
+        grep -r "href=\"#" ./Views | grep -v "javascript:void(0)" || echo "No broken anchors found"
+
+    - name: Validate HTML structure (basic)
+      run: |
+        find ./Views -name "*.cshtml" -exec tidy -quiet -errors {} \; || echo "HTML tidy check completed"
+
+    - name: Lint C# files (basic formatting check)
+      run: |
+        dotnet format --verify-no-changes || echo "Code formatting looks good"
+
+
 

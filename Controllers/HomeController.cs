@@ -19,7 +19,13 @@ namespace Nanas_Foundation.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var latestEvent = _context.Events
+            .Where(e => e.Date >= DateTime.Today)
+            .OrderBy(e => e.Date)
+            .FirstOrDefault();
+
+            return View(latestEvent);
+
         }
 
         public IActionResult Privacy()
@@ -66,6 +72,25 @@ namespace Nanas_Foundation.Controllers
         {
             return View();
         }
+
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ContactUs(string name, string email, string message)
+        {
+            // Simulate processing (e.g., log to console, trigger dummy service, etc.)
+            Console.WriteLine($"Contact form submitted by {name} ({email}): {message}");
+
+            // Optionally pass a success flag or redirect
+            TempData["MessageSent"] = true;
+            return RedirectToAction("ContactUs");
+        }
+
+
 
         public IActionResult NewsEvents()
         {

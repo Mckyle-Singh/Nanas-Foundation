@@ -93,6 +93,7 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
+
 .btn-outline-light {
     border: 2px solid white;
     color: white;
@@ -478,6 +479,9 @@ body {
 .navbar .nav-link:hover {
     color: #DA5B34 !important;
 }
+
+
+
 
 /* Authentication Pages Styles */
 .auth-container {
