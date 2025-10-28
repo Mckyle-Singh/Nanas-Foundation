@@ -1,5 +1,8 @@
-@using Azure.Core
-@model IEnumerable<Nanas_Foundation.Models.Event>
+@using X.PagedList.Mvc.Core
+
+@using X.PagedList
+
+@model IPagedList<Nanas_Foundation.Models.Event>
 
 @{
     ViewData["Title"] = "Manage Events";
@@ -96,5 +99,24 @@
                 }
             </tbody>
         </table>
+        <div class="mt-4 d-flex justify-content-center">
+            <nav aria-label="Event pagination">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, search = ViewData["SearchTerm"] }),
+                new PagedListRenderOptions
+                {
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                    DisplayLinkToIndividualPages = true,
+                    MaximumPageNumbersToDisplay = 5,
+                    UlElementClasses = new[] { "pagination", "pagination-sm", "justify-content-center", "mb-0" },
+                    LiElementClasses = new[] { "page-item" },
+                    PageClasses = new[] { "page-link", "text-dark", "bg-light", "border-0", "rounded" },
+                    ActiveLiElementClass = "active",
+                   
+                })
+            </nav>
+        </div>
     </div>
 </div>

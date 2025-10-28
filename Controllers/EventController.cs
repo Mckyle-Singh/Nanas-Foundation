@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Nanas_Foundation.Data;
 using Nanas_Foundation.Models;
+using X.PagedList.Extensions;
+
 
 namespace Nanas_Foundation.Controllers
 {
@@ -15,24 +17,26 @@ namespace Nanas_Foundation.Controllers
 
 
         [HttpGet]
-        public IActionResult Index(string search)
+        public IActionResult Index(string search ,int page =1)
         {
+            int pageSize = 10;
+
             var events = _context.Events.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search))
             {
                 events = events.Where(e =>
-                    e.Title.Contains(search)||
+                    e.Title.Contains(search) ||
                     e.Location.Contains(search));
             }
 
-            var result = events
+            var pagedEvents = events
                 .OrderByDescending(e => e.Date)
-                .ToList();
+                .ToPagedList(page, pageSize);
 
             ViewData["SearchTerm"] = search;
 
-            return View(result);
+            return View(pagedEvents);
 
         }
         [HttpGet]
