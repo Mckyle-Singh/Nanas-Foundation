@@ -41,6 +41,25 @@ namespace Nanas_Foundation.Areas.Admin.Controllers
                 .Count();
             ViewBag.EventsPlanned = eventsPlanned;
 
+            // Events grouped by month (for pie chart)
+            var eventsByMonth = _context.Events
+                .Where(e => e.Date.Year == currentYear)
+                .GroupBy(e => e.Date.Month)
+                .Select(g => new
+                {
+                    MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(g.Key),
+                    Count = g.Count()
+                })
+                .ToList()
+                .OrderBy(e => DateTime.ParseExact(e.MonthName, "MMM", CultureInfo.InvariantCulture).Month)
+                .ToList();
+
+            ViewBag.EventsByMonth = eventsByMonth;
+
+
+            // Total volunteers signed up
+            var totalVolunteers = _context.Volunteers.Count();
+            ViewBag.TotalVolunteers = totalVolunteers;
 
             return View(monthlyTotals);
 
