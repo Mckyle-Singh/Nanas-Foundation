@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Impact Dashboard";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    var labelsJson = System.Text.Json.JsonSerializer.Serialize(Model.Select(m => m.MonthName));
+    var valuesJson = System.Text.Json.JsonSerializer.Serialize(Model.Select(m => m.TotalAmount));
 }
 
 <!-- Header Section -->
@@ -18,16 +21,6 @@
 
 <!-- Main Content -->
 <div class="container-fluid px-4" style="max-width: none;">
-    <!-- Search Bar -->
-    <div class="mb-4">
-        <div class="admin-search-bar input-group">
-            <input type="text" class="form-control" placeholder="Search resources..." />
-            <button class="btn" type="button">
-                <i class="bi bi-search"></i>
-            </button>
-        </div>
-    </div>
-
     <!-- Metrics Summary -->
     <div class="row mb-5">
         <div class="col-lg-3 col-md-6 mb-4">
@@ -55,23 +48,21 @@
             <div class="dashboard-card text-center">
                 <i class="bi bi-hand-thumbs-up card-icon"></i>
                 <div class="card-number">65</div>
-                <div class="card-label">Volunteers engaged</div>
+                <div class="card-label">Volunteers Engaged</div>
             </div>
         </div>
     </div>
 
     <!-- Charts Section -->
     <div class="row">
-        <!-- Monthly Reach Chart -->
+        <!-- Monthly Donations Chart -->
         <div class="col-lg-7 mb-4">
             <div class="chart-container">
-                <h5>Monthly Reach</h5>
-                <div class="monthly-reach-chart">
-                    <canvas id="monthlyReachChart"></canvas>
-                </div>
+                <h5>Monthly Donations</h5>
+                <canvas id="monthlyReachChart"></canvas>
             </div>
         </div>
-        
+
         <!-- Sessions by Type -->
         <div class="col-lg-5 mb-4">
             <div class="chart-container">
@@ -101,30 +92,23 @@
             </div>
         </div>
     </div>
-
-    <!-- Additional Info Section -->
-    <div class="row">
-        <div class="col-12">
-            <div class="chart-container">
-                <h6 class="text-muted mb-3">Understand common rephonstaticisl and facts about the</h6>
-                <a href="#" class="text-danger fw-semibold">Read Article</a>
-            </div>
-        </div>
-    </div>
 </div>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Monthly Reach Line Chart
+        // Monthly Donations Line Chart
+        const labels = @Html.Raw(labelsJson);
+        const values = @Html.Raw(valuesJson);
+
         const monthlyReachCtx = document.getElementById('monthlyReachChart').getContext('2d');
         const monthlyReachChart = new Chart(monthlyReachCtx, {
             type: 'line',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: labels,
                 datasets: [{
-                    label: 'Monthly Reach',
-                    data: [300, 450, 600, 750, 800, 900, 950, 1000, 1100, 1200, 1250, 1200],
+                    label: 'Monthly Donations',
+                    data: values,
                     borderColor: '#DA5B34',
                     backgroundColor: 'rgba(218, 91, 52, 0.1)',
                     borderWidth: 3,
@@ -137,25 +121,16 @@
                 maintainAspectRatio: false,
                 aspectRatio: 3,
                 plugins: {
-                    legend: {
-                        display: false
-                    }
+                    legend: { display: false }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
-                        max: 1400,
-                        grid: {
-                            color: '#f1f3f4'
-                        },
-                        ticks: {
-                            stepSize: 200
-                        }
+                        grid: { color: '#f1f3f4' },
+                        ticks: { stepSize: 200 }
                     },
                     x: {
-                        grid: {
-                            display: false
-                        }
+                        grid: { display: false }
                     }
                 }
             }
@@ -175,12 +150,10 @@
                 }]
             },
             options: {
-                responsive: false,
+                responsive: true,
                 maintainAspectRatio: true,
                 plugins: {
-                    legend: {
-                        display: false
-                    }
+                    legend: { display: false }
                 }
             }
         });
