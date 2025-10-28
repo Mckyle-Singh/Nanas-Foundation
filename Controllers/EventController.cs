@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nanas_Foundation.Data;
 using Nanas_Foundation.Models;
@@ -15,7 +16,7 @@ namespace Nanas_Foundation.Controllers
             _context = context;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Index(string search ,int page =1)
         {
@@ -39,12 +40,15 @@ namespace Nanas_Foundation.Controllers
             return View(pagedEvents);
 
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(Event evt)
         {
@@ -57,6 +61,7 @@ namespace Nanas_Foundation.Controllers
             return View(evt);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
@@ -65,6 +70,7 @@ namespace Nanas_Foundation.Controllers
             return View(evt);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Edit(Guid id, Event updatedEvent)
         {
@@ -79,6 +85,7 @@ namespace Nanas_Foundation.Controllers
             return View(updatedEvent);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
@@ -89,7 +96,7 @@ namespace Nanas_Foundation.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetDetailsJson(Guid id)
         {
