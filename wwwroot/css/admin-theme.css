@@ -332,7 +332,12 @@ body {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    width: 100%;
+    max-width: 300px; /* Optional: controls max size */
+    aspect-ratio: 1 / 1; /* Ensures it's always a square */
+    margin: 0 auto; /* Center horizontally */
 }
+
 
 .chart-center-button {
     position: absolute;
