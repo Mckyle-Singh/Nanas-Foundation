@@ -1,21 +1,31 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Nanas_Foundation.Data;
 using Nanas_Foundation.Models;
+using System.Diagnostics;
 
 namespace Nanas_Foundation.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var latestEvent = _context.Events
+            .Where(e => e.Date >= DateTime.Today)
+            .OrderBy(e => e.Date)
+            .FirstOrDefault();
+
+            return View(latestEvent);
+
         }
 
         public IActionResult Privacy()
@@ -61,6 +71,41 @@ namespace Nanas_Foundation.Controllers
         public IActionResult FAQ()
         {
             return View();
+        }
+
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ContactUs(string name, string email, string message)
+        {
+            // Simulate processing (e.g., log to console, trigger dummy service, etc.)
+            Console.WriteLine($"Contact form submitted by {name} ({email}): {message}");
+
+            // Optionally pass a success flag or redirect
+            TempData["MessageSent"] = true;
+            return RedirectToAction("ContactUs");
+        }
+
+
+
+        public IActionResult NewsEvents()
+        {
+            var upcomingEvents = _context.Events
+            .Where(e => e.Date >= DateTime.Today)
+            .OrderBy(e => e.Date)
+            .Take(4)
+            .ToList();
+
+            var recentBlogs = _context.BlogPosts
+            .OrderByDescending(b => b.CreatedAt)
+            .Take(4)
+            .ToList();
+
+            return View(Tuple.Create(upcomingEvents, recentBlogs));
         }
 
         public IActionResult Help()

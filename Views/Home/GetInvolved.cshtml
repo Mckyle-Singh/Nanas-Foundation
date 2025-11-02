@@ -31,7 +31,7 @@
                     <i class="bi bi-hands-helping" style="font-size: 3rem; color: #DA5B34; margin-bottom: 20px;"></i>
                     <h4 class="event-title">Volunteer</h4>
                     <p>Join our team of dedicated volunteers and directly impact lives in your community through events, counseling support, and outreach programs.</p>
-                    <a asp-controller="Volunteers" asp-action="VolunteerForEvent" class="btn btn-outline-primary" style="border-color: #DA5B34; color: #DA5B34;">Start Volunteering</a>
+                    <a asp-controller="Volunteers" asp-action="VolunteerForEvent" class="btn btn-outline-light" style="border-color: #DA5B34; color: #DA5B34;">Start Volunteering</a>
                 </div>
             </div>
             <div class="col-lg-4 mb-4">
@@ -39,7 +39,7 @@
                     <i class="bi bi-heart-fill" style="font-size: 3rem; color: #DA5B34; margin-bottom: 20px;"></i>
                     <h4 class="event-title">Donate</h4>
                     <p>Your financial support helps us provide free counseling services, educational programs, and crisis intervention to those who need it most.</p>
-                    <a href="#donation-section" class="btn btn-outline-primary" style="border-color: #DA5B34; color: #DA5B34;">Make a Donation</a>
+                    <a href="#donation-section" class="btn btn-outline-light" style="border-color: #DA5B34; color: #DA5B34;">Make a Donation</a>
                 </div>
             </div>
             <div class="col-lg-4 mb-4">
@@ -47,7 +47,7 @@
                     <i class="bi bi-megaphone" style="font-size: 3rem; color: #DA5B34; margin-bottom: 20px;"></i>
                     <h4 class="event-title">Advocate</h4>
                     <p>Help us spread awareness about mental health issues and reduce stigma by sharing our message and supporting our advocacy efforts.</p>
-                    <a href="#advocacy-section" class="btn btn-outline-primary" style="border-color: #DA5B34; color: #DA5B34;">Join Advocacy</a>
+                    <a href="#advocacy-section" class="btn btn-outline-light" style="border-color: #DA5B34; color: #DA5B34;">Join Advocacy</a>
                 </div>
             </div>
         </div>
@@ -67,23 +67,35 @@
                 <div class="row">
                     <div class="col-md-4 mb-4">
                         <div class="event-card text-center">
-                            <h5 class="event-title">$25</h5>
+                            <h5 class="event-title">R25</h5>
                             <p>Provides one counseling session for a young person in need</p>
-                            <button class="btn btn-light" style="background: #DA5B34; color: white; border: none; width: 100%;">Donate $25</button>
+                            <button type="button" class="btn btn-light"
+                                    style="background: #DA5B34; color: white; border: none; width: 100%;"
+                                    onclick="window.location.href='@Url.Action("Create", "Donations", new { amount = 25 })'">
+                                Donate $25
+                            </button>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="event-card text-center">
-                            <h5 class="event-title">$50</h5>
+                            <h5 class="event-title">R50</h5>
                             <p>Funds educational materials for one mental health workshop</p>
-                            <button class="btn btn-light" style="background: #DA5B34; color: white; border: none; width: 100%;">Donate $50</button>
+                            <button type="button" class="btn btn-light"
+                                    style="background: #DA5B34; color: white; border: none; width: 100%;"
+                                    onclick="window.location.href='@Url.Action("Create", "Donations", new { amount = 50 })'">
+                                Donate $50
+                            </button>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
                         <div class="event-card text-center">
-                            <h5 class="event-title">$100</h5>
+                            <h5 class="event-title">R100</h5>
                             <p>Supports crisis intervention services for one month</p>
-                            <button class="btn btn-light" style="background: #DA5B34; color: white; border: none; width: 100%;">Donate $100</button>
+                            <button type="button" class="btn btn-light"
+                                    style="background: #DA5B34; color: white; border: none; width: 100%;"
+                                    onclick="window.location.href='@Url.Action("Create", "Donations", new { amount = 100 })'">
+                                Donate $100
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -95,9 +107,14 @@
                         <div class="row justify-content-center">
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text">$</span>
+                                    <span class="input-group-text">R</span>
                                     <input type="number" class="form-control" placeholder="Enter amount" min="1">
-                                    <button class="btn btn-light" style="background: #DA5B34; color: white; border: none;">Donate</button>
+                                    <button type="button"
+                                            class="btn btn-light"
+                                            style="background: #DA5B34; color: white; border: none;"
+                                            onclick="redirectWithAmount()">
+                                        Donate
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -227,10 +244,26 @@
                     <p>We work with businesses and organizations to create comprehensive mental health support programs. Partnership opportunities include employee wellness programs, sponsorship of events, and collaborative community initiatives.</p>
                 </div>
                 <div class="hero-buttons">
-                    <a asp-controller="Home" asp-action="Contact" class="btn btn-light" style="background: #DA5B34; color: white; border: none;">Partner With Us</a>
-                    <a asp-controller="Home" asp-action="About" class="btn btn-outline-primary" style="border-color: #DA5B34; color: #DA5B34;">Learn More</a>
+                    <a asp-controller="Home" asp-action="ContactUs" class="btn btn-light" style="background: #DA5B34; color: white; border: none;">Partner With Us</a>
+                    <a asp-controller="Home" asp-action="About" class="btn btn-outline-light" style="border-color: #DA5B34; color: #DA5B34;">Learn More</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        function redirectWithAmount() {
+            const input = document.querySelector('#donation-section input[type="number"]');
+            const amount = input ? input.value.trim() : "";
+
+            if (amount && parseFloat(amount) > 0) {
+                const url = '@Url.Action("Create", "Donations")' + '?amount=' + amount;
+                window.location.href = url;
+            } else {
+                alert('Please enter a valid amount before donating.');
+            }
+        }
+    </script>
+}

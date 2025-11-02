@@ -1,0 +1,84 @@
+﻿@model Nanas_Foundation.Models.BlogPost
+@{
+    ViewData["Title"] = "Edit Blog Post";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container py-5">
+    <h2 class="text-center fw-bold mb-2" style="color:#0B2C48;">Edit Blog Post</h2>
+    <p class="text-center text-muted mb-5">
+        Update the blog post details below
+    </p>
+
+    <form asp-action="Edit" method="post" enctype="multipart/form-data" class="mx-auto" style="max-width: 700px;">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="AuthorName" class="form-label fw-semibold">Author Name*</label>
+            <input asp-for="AuthorName" class="form-control shadow-sm" />
+            <span asp-validation-for="AuthorName" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="AuthorEmail" class="form-label fw-semibold">Author Email*</label>
+            <input asp-for="AuthorEmail" class="form-control shadow-sm" />
+            <span asp-validation-for="AuthorEmail" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="WebsiteLink" class="form-label fw-semibold">Website Link</label>
+            <input asp-for="WebsiteLink" class="form-control shadow-sm" />
+        </div>
+
+        @* Show current PDF if available *@
+        @if (!string.IsNullOrEmpty(Model.PdfFilePath))
+        {
+            <div class="mb-2">
+                <label class="form-label fw-semibold">Current PDF:</label>
+                <a href="@Model.PdfFilePath" target="_blank" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-file-earmark-pdf"></i> View PDF
+                </a>
+            </div>
+        }
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Upload New PDF</label>
+            <input type="file" name="PdfFile" class="form-control shadow-sm" accept=".pdf" />
+        </div>
+
+        @* Show current profile photo if available *@
+        @if (!string.IsNullOrEmpty(Model.ProfilePhotoPath))
+        {
+            <div class="mb-2">
+                <label class="form-label fw-semibold">Current Profile Photo:</label><br />
+                <img src="@Model.ProfilePhotoPath" class="rounded-circle mb-2" style="height:80px; width:80px; object-fit:cover;" />
+            </div>
+        }
+        <div class="mb-3">
+            <label class="form-label fw-semibold">Upload New Profile Photo</label>
+            <input type="file" name="ProfilePhoto" class="form-control shadow-sm" accept="image/*" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label fw-semibold">Article Title*</label>
+            <input asp-for="Title" class="form-control shadow-sm" />
+            <span asp-validation-for="Title" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CreatedAt" class="form-label fw-semibold">Created At</label>
+            <input asp-for="CreatedAt" class="form-control shadow-sm" type="date" />
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn px-5 py-2 fw-semibold rounded-pill"
+                    style="background-color:#0B2C48; color:white; border:none;">
+                Save Changes
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -2,50 +2,62 @@
     ViewData["Title"] = "Volunteer for an Event";
 }
 
-<div class="container mt-5">
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="fw-bold" style="color: #DA5B34;">NANA'S FOUNDATION</h1>
+<!-- Hero Section -->
+<section class="hero-section text-white py-5" style="background: linear-gradient(to right, #DA5B34, #f39c12);">
+    <div class="container text-center">
+        <h1 class="display-5 fw-bold">Volunteer for an Event</h1>
+        <p class="lead">How you can contribute and make a difference by volunteering with <strong>Nana's Foundation</strong>.</p>
     </div>
+</section>
 
-    <!-- Title & Description -->
-    <h2 class="fw-bold text-center">Volunteer for an Event</h2>
-    <p class="text-center text-muted">
-        How you can contribute and make a difference by volunteering with <strong>Nana's Foundation</strong>.
-    </p>
-
-    <!-- Form -->
-    <form asp-action="VolunteerForEvent" method="post" class="mt-4">
-        <div class="form-group mb-3">
-            <label for="eventId" class="form-label">Choose an event:</label>
-            <select id="eventId" name="eventId" class="form-select" required>
-                <option value="">-- Select an event --</option>
-                @foreach (var item in ViewBag.Events as List<SelectListItem>)
+<!-- Form Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                @if (User?.Identity?.IsAuthenticated==true)
                 {
-                    <option value="@item.Value">@item.Text</option>
+                    <form asp-action="VolunteerForEvent" method="post" class="p-4 bg-white rounded shadow-sm">
+                        <h4 class="mb-4 fw-bold text-center" style="color: #DA5B34;">Choose Your Event</h4>
+
+                        <div class="mb-3">
+                            <label for="eventId" class="form-label">Select an event:</label>
+                            <select id="eventId" name="eventId" class="form-select" required>
+                                <option value="">-- Select an event --</option>
+                                @foreach (var item in ViewBag.Events as List<SelectListItem>)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Event Details Panel -->
+                        <div id="eventDetails" class="border rounded p-3 mb-4 bg-light" style="display: none;">
+                            <h5 id="eventTitle" class="fw-bold mb-2">Event Title</h5>
+                            <p id="eventDescription" class="mb-1">Event description text goes here.</p>
+                            <p><strong>Date:</strong> <span id="eventDate">YYYY-MM-DD</span></p>
+                            <p><strong>Location:</strong> <span id="eventLocation">Event Location</span></p>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn px-4 py-2 fw-bold" style="background-color: #DA5B34; color: white;">
+                                Volunteer
+                            </button>
+                        </div>
+                    </form>
                 }
-            </select>
+                else
+                {
+                    <div class="alert alert-warning text-center p-4 bg-white rounded shadow-sm">
+                        Please <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="/Volunteer/VolunteerForEvent">log in</a> to volunteer for an event.
+                    </div>
+                }
+            </div>
         </div>
+    </div>
+</section>
 
-        <!-- Event Details Panel -->
-        <div id="eventDetails" class="border rounded p-3 mb-4" style="display: none;">
-            <h5 id="eventTitle" class="fw-bold mb-2">Event Title</h5>
-            <p id="eventDescription" class="mb-1">Event description text goes here.</p>
-            <p><strong>Date:</strong> <span id="eventDate">YYYY-MM-DD</span></p>
-            <p><strong>Location:</strong> <span id="eventLocation">Event Location</span></p>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="btn fw-bold px-4 py-2" style="background-color: #DA5B34; color: white;">
-            Volunteer
-        </button>
-    </form>
-
-    <!-- Footer -->
-    <footer class="mt-5 text-muted text-center small">
-        &copy; 2025 Nana's Foundation
-    </footer>
-</div>
 
 <!-- JavaScript for dynamic event details -->
 <script>
@@ -72,6 +84,3 @@
             });
     });
 </script>
-
-
-

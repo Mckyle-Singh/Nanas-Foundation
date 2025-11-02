@@ -1,42 +1,122 @@
-﻿@model IEnumerable<Nanas_Foundation.Models.Event>
+@using X.PagedList.Mvc.Core
+
+@using X.PagedList
+
+@model IPagedList<Nanas_Foundation.Models.Event>
 
 @{
-    ViewData["Title"] = "Events";
+    ViewData["Title"] = "Manage Events";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Upcoming Events</h2>
+<!-- Header Section -->
+<div class="admin-header">
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h1>MANAGE EVENTS</h1>
+            <h2 class="subtitle">Event Management</h2>
+            <p class="description">Create, edit, and manage all foundation events</p>
+        </div>
+        <a asp-action="Create" class="btn btn-admin-primary">
+            <i class="bi bi-plus-circle me-2"></i>Add New Event
+        </a>
+    </div>
+</div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Location</th>
-            <th>Description</th>
-            <th>Options</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var evt in Model)
-        {
-            <tr>
-                <td>@evt.Title</td>
-                <td>@evt.Date.ToString("f")</td>
-                <td>@evt.Location</td>
-                <td>@evt.Description</td>
-                <td>
-                    <div class="d-flex gap-2">
-                        <a asp-action="Edit" asp-route-id="@evt.Id" class="btn btn-warning btn-sm">Edit</a>
-                        <form asp-action="Delete" asp-route-id="@evt.Id" method="post" onsubmit="return confirm('Are you sure?');">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<!-- Main Content -->
+<div class="container-fluid px-4" style="max-width: none;">
+    <!-- Search Bar -->
+    <form method="get">
+        <div class="mb-4">
+            <div class="admin-search-bar input-group">
+                <input type="text" name="search" class="form-control" placeholder="Search by title or location..." value="@ViewData["SearchTerm"]" />
+                <button class="btn" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+   
 
-<a asp-action="Create" class="btn btn-primary">Create New Event</a>
-
+    <!-- Events Table -->
+    <div class="admin-table">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th><i class="bi bi-calendar-event me-2"></i>Title</th>
+                    <th><i class="bi bi-clock me-2"></i>Date</th>
+                    <th><i class="bi bi-geo-alt me-2"></i>Location</th>
+                    <th><i class="bi bi-card-text me-2"></i>Description</th>
+                    <th><i class="bi bi-gear me-2"></i>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.Any() == true)
+                {
+                    @foreach (var evt in Model)
+                    {
+                        <tr>
+                            <td><strong>@evt.Title</strong></td>
+                            <td>@evt.Date.ToString("MMM dd, yyyy")<br><small class="text-muted">@evt.Date.ToString("h:mm tt")</small></td>
+                            <td>@evt.Location</td>
+                            <td>
+                                @if (evt.Description?.Length > 50)
+                                {
+                                    @(evt.Description.Substring(0, 50) + "...")
+                                }
+                                else
+                                {
+                                    @evt.Description
+                                }
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a asp-action="Edit" asp-route-id="@evt.Id" class="btn btn-sm btn-warning" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@evt.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            <div class="text-muted">
+                                <i class="bi bi-calendar-x fs-1 mb-3 d-block"></i>
+                                <h5>No Events Found</h5>
+                                <p>Start by creating your first event.</p>
+                                <a asp-action="Create" class="btn btn-admin-primary">Create Event</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="mt-4 d-flex justify-content-center">
+            <nav aria-label="Event pagination">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, search = ViewData["SearchTerm"] }),
+                new PagedListRenderOptions
+                {
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                    DisplayLinkToIndividualPages = true,
+                    MaximumPageNumbersToDisplay = 5,
+                    UlElementClasses = new[] { "pagination", "pagination-sm", "justify-content-center", "mb-0" },
+                    LiElementClasses = new[] { "page-item" },
+                    PageClasses = new[] { "page-link", "text-dark", "bg-light", "border-0", "rounded" },
+                    ActiveLiElementClass = "active",
+                   
+                })
+            </nav>
+        </div>
+    </div>
+</div>

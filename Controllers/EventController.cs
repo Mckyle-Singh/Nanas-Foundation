@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nanas_Foundation.Data;
 using Nanas_Foundation.Models;
+using X.PagedList.Extensions;
+
 
 namespace Nanas_Foundation.Controllers
 {
@@ -13,19 +16,39 @@ namespace Nanas_Foundation.Controllers
             _context = context;
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string search ,int page =1)
         {
-            var events = _context.Events.ToList();
-            return View(events);
+            int pageSize = 10;
+
+            var events = _context.Events.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                events = events.Where(e =>
+                    e.Title.Contains(search) ||
+                    e.Location.Contains(search));
+            }
+
+            var pagedEvents = events
+                .OrderByDescending(e => e.Date)
+                .ToPagedList(page, pageSize);
+
+            ViewData["SearchTerm"] = search;
+
+            return View(pagedEvents);
+
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(Event evt)
         {
@@ -38,6 +61,7 @@ namespace Nanas_Foundation.Controllers
             return View(evt);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Edit(Guid id)
         {
@@ -46,6 +70,7 @@ namespace Nanas_Foundation.Controllers
             return View(evt);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Edit(Guid id, Event updatedEvent)
         {
@@ -60,6 +85,7 @@ namespace Nanas_Foundation.Controllers
             return View(updatedEvent);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
@@ -70,7 +96,7 @@ namespace Nanas_Foundation.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetDetailsJson(Guid id)
         {

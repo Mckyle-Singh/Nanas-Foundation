@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,19 +23,25 @@ namespace Nanas_Foundation.Controllers
         [ActionName("VolunteerForEvent")]
         public async Task<IActionResult> ShowVolunteerForm()
         {
+            var today = DateTime.Today;
+
             var events = await _context.Events
+                .Where(e => e.Date >= today) // Only include future or current events
+                .OrderBy(e => e.Date)        // Optional: sort chronologically
                 .Select(e => new SelectListItem
                 {
                     Value = e.Id.ToString(),
-                    Text = e.Title
+                    Text = $"{e.Title} ({e.Date:MMM d, yyyy})"
                 })
                 .ToListAsync();
 
             ViewBag.Events = events;
             return View("VolunteerForEvent");
+
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> VolunteerForEvent(Guid eventId)
         {
             var userId = _activeUser.GetUserId(User);

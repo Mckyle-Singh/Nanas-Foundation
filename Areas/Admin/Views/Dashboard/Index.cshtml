@@ -1,76 +1,183 @@
-﻿@{
+@model List<Nanas_Foundation.Areas.Admin.ViewModels.MonthlyDonationViewModel>
+
+@{
     ViewData["Title"] = "Impact Dashboard";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    var labelsJson = System.Text.Json.JsonSerializer.Serialize(Model.Select(m => m.MonthName));
+    var valuesJson = System.Text.Json.JsonSerializer.Serialize(Model.Select(m => m.TotalAmount));
 }
 
-<div class="container-fluid">
-    <h1 class="text-danger fw-bold mb-2">IMPACT DASHBOARD</h1>
-    <h2 class="fw-semibold text-dark mb-1">Tracking Our Progress</h2>
-    <p class="text-muted mb-4">An overview of our initiatives and their outcomes.</p>
-
-    <!-- Search Bar -->
-    <div class="input-group mb-4" style="max-width: 400px;">
-        <input type="text" class="form-control" placeholder="Search resources..." />
-        <button class="btn btn-outline-secondary" type="button">
-            <i class="bi bi-search"></i>
-        </button>
+<!-- Header Section -->
+<div class="admin-header">
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h1>IMPACT DASHBOARD</h1>
+            <h2 class="subtitle">Tracking Our Progress</h2>
+            <p class="description">An overview of our initiatives and their outcomes</p>
+        </div>
     </div>
+</div>
 
+<!-- Main Content -->
+<div class="container-fluid px-4" style="max-width: none;">
     <!-- Metrics Summary -->
-    <div class="row text-center mb-4">
-        <div class="col-md-3">
-            <div class="bg-light p-3 rounded shadow-sm">
-                <i class="bi bi-mic-fill fs-2 text-danger mb-2"></i>
-                <h4 class="fw-bold">52</h4>
-                <p class="text-muted">Speeches Conducted</p>
+    <div class="row mb-5">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="dashboard-card text-center">
+                <i class="bi bi-cash-coin card-icon"></i>
+                <div class="card-number">
+                    @ViewBag.TotalDonations.ToString("C", new System.Globalization.CultureInfo("en-ZA"))
+                </div>
+                <div class="card-label">Total Donations</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="bg-light p-3 rounded shadow-sm">
-                <i class="bi bi-people-fill fs-2 text-danger mb-2"></i>
-                <h4 class="fw-bold">1,250</h4>
-                <p class="text-muted">Individuals Reached</p>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="dashboard-card text-center">
+                <i class="bi bi-calendar-event card-icon"></i>
+                <div class="card-number">
+                    @ViewBag.EventsPlanned
+                </div>
+                <div class="card-label">Events Planned This Year</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="bg-light p-3 rounded shadow-sm">
-                <i class="bi bi-easel-fill fs-2 text-danger mb-2"></i>
-                <h4 class="fw-bold">18</h4>
-                <p class="text-muted">Workshops Facilitated</p>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="dashboard-card text-center">
+                <i class="bi bi-lightbulb card-icon"></i>
+                <div class="card-number">18</div>
+                <div class="card-label">Workshops Facilitated</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="bg-light p-3 rounded shadow-sm">
-                <i class="bi bi-person-heart fs-2 text-danger mb-2"></i>
-                <h4 class="fw-bold">65</h4>
-                <p class="text-muted">Volunteers Engaged</p>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="dashboard-card text-center">
+                <i class="bi bi-person-heart card-icon"></i>
+                <div class="card-number">@ViewBag.TotalVolunteers</div>
+                <div class="card-label">Volunteers Engaged</div>
             </div>
         </div>
     </div>
 
-    <!-- Placeholder Graph -->
-    <div class="row mb-4">
-        <div class="col-md-6">
-            <div class="bg-white p-4 rounded shadow-sm">
-                <h5 class="fw-bold mb-3">Monthly Reach</h5>
-                <img src="https://placehold.co/400x400" class="img-fluid" alt="Monthly Reach Graph" />
-                <p class="mt-2 text-muted">Understand common rephostatisical and fit the methods at the...</p>
-                <a href="#" class="btn btn-sm btn-outline-danger">Read Article</a>
+    <!-- Charts Section -->
+    <div class="row">
+        <!-- Monthly Donations Chart -->
+        <div class="col-lg-7 mb-4">
+            <div class="chart-container">
+                <h5>Monthly Donations</h5>
+                <canvas id="monthlyReachChart"></canvas>
             </div>
         </div>
 
-        <!-- Pie Chart -->
-        <div class="col-md-6">
-            <div class="bg-white p-4 rounded shadow-sm">
-                <h5 class="fw-bold mb-3">Sessions by Type</h5>
-                <img src="https://placehold.co/400x400" class="img-fluid mb-2" alt="Session Types" />
-                <ul class="list-unstyled text-muted">
-                    <li><span class="text-danger fw-bold">●</span> Outreach: 50%</li>
-                    <li><span class="text-warning fw-bold">●</span> Education: 35%</li>
-                    <li><span class="text-info fw-bold">●</span> Advocacy: 15%</li>
-                </ul>
-                <a href="#" class="btn btn-sm btn-outline-danger">View Resource</a>
+        <!-- Events by Month -->
+        <div class="col-lg-5 mb-4">
+            <div class="chart-container">
+                <h5>Events by Month</h5>
+                <div class="sessions-chart-wrapper">
+                    <div class="pie-chart-container">
+                        <canvas id="sessionsChart"></canvas>
+                    </div>
+                    @{
+                        var eventColors = new[] {
+                                        "#FF6B35", "#F7931E", "#FFD23F", "#4BC0C0",
+                                        "#9966FF", "#FF9F40", "#8BC34A", "#E91E63",
+                                        "#00BCD4", "#795548", "#607D8B", "#F44336"
+                                        };
+
+                        var eventsByMonth = ViewBag.EventsByMonth as IEnumerable<dynamic>;
+                    }
+                    <div class="pie-chart-legend">
+                        @if (eventsByMonth != null)
+                        {
+                            var index = 0;
+                            foreach (var item in eventsByMonth)
+                            {
+                                var color = eventColors[index % eventColors.Length];
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: @color;"></div>
+                                    <span class="legend-label">@item.MonthName</span>
+                                </div>
+                                index++;
+                            }
+                        }
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Monthly Donations Line Chart
+        const labels = @Html.Raw(labelsJson);
+        const values = @Html.Raw(valuesJson);
+
+        const monthlyReachCtx = document.getElementById('monthlyReachChart').getContext('2d');
+        const monthlyReachChart = new Chart(monthlyReachCtx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Monthly Donations',
+                    data: values,
+                    borderColor: '#DA5B34',
+                    backgroundColor: 'rgba(218, 91, 52, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                aspectRatio: 3,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#f1f3f4' },
+                        ticks: { stepSize: 200 }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+               // Events by Month Pie Chart (replacing Sessions by Type)
+        const eventsData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.EventsByMonth));
+        const eventLabels = eventsData.map(e => e.MonthName);
+        const eventCounts = eventsData.map(e => e.Count);
+
+        const sessionsCtx = document.getElementById('sessionsChart').getContext('2d');
+        const sessionsChart = new Chart(sessionsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: eventLabels,
+                datasets: [{
+                    data: eventCounts,
+                    backgroundColor: [
+                        '#FF6B35', '#F7931E', '#FFD23F', '#4BC0C0',
+                        '#9966FF', '#FF9F40', '#8BC34A', '#E91E63',
+                        '#00BCD4', '#795548', '#607D8B', '#F44336'
+                    ],
+                    borderWidth: 0,
+                    cutout: '65%'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+    </script>
+}

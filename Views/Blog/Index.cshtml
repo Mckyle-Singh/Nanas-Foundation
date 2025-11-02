@@ -1,0 +1,126 @@
+@using Azure.Core
+
+@model List<Nanas_Foundation.Models.BlogPost>
+
+@{
+    ViewData["Title"] = "Blog Posts";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Header Section -->
+<div class="admin-header">
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h1>MANAGE BLOG POSTS</h1>
+            <h2 class="subtitle">Blog Management</h2>
+            <p class="description">Create, edit, and manage all blog submissions</p>
+        </div>
+        <a asp-action="Create" class="btn btn-admin-primary">
+            <i class="bi bi-plus-circle me-2"></i>Add New Post
+        </a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container-fluid px-4" style="max-width: none;">
+    <!-- Search Bar -->
+    <div class="mb-4">
+        <form method="get">
+            <div class="admin-search-bar input-group">
+                <input type="text" name="search" class="form-control" placeholder="Search by title or author..." value="@ViewData["SearchTerm"]" />
+                <button type="submit" class="btn">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Blog Posts Table -->
+    <div class="admin-table">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th><i class="bi bi-person me-2"></i>Author</th>
+                    <th><i class="bi bi-journal-text me-2"></i>Title</th>
+                    <th><i class="bi bi-envelope me-2"></i>Email</th>
+                    <th><i class="bi bi-calendar me-2"></i>Created</th>
+                    <th><i class="bi bi-file-earmark-pdf me-2"></i>Files</th>
+                    <th><i class="bi bi-gear me-2"></i>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model?.Any() == true)
+                {
+                    @foreach (var post in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    @if (!string.IsNullOrEmpty(post.ProfilePhotoPath))
+                                    {
+                                        <img src="@post.ProfilePhotoPath" class="rounded-circle me-3" style="height:40px; width:40px; object-fit:cover;" />
+                                    }
+                                    else
+                                    {
+                                        <div class="rounded-circle me-3 bg-light d-flex align-items-center justify-content-center" style="height:40px; width:40px;">
+                                            <i class="bi bi-person text-muted"></i>
+                                        </div>
+                                    }
+                                    <strong>@post.AuthorName</strong>
+                                </div>
+                            </td>
+                            <td>
+                                <strong>@post.Title</strong>
+                                @if (!string.IsNullOrEmpty(post.WebsiteLink))
+                                {
+                                    <br><small><a href="@post.WebsiteLink" target="_blank" class="text-muted">@post.WebsiteLink</a></small>
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(post.AuthorEmail))
+                                {
+                                    <a href="mailto:@post.AuthorEmail">@post.AuthorEmail</a>
+                                }
+                            </td>
+                            <td>@post.CreatedAt.ToString("MMM dd, yyyy")<br><small class="text-muted">@post.CreatedAt.ToString("h:mm tt")</small></td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(post.PdfFilePath))
+                                {
+                                    <a href="@post.PdfFilePath" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+                                    </a>
+                                }
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-sm btn-warning" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@post.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this blog post?');">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-4">
+                            <div class="text-muted">
+                                <i class="bi bi-journal-x fs-1 mb-3 d-block"></i>
+                                <h5>No Blog Posts Found</h5>
+                                <p>Start by creating your first blog post.</p>
+                                <a asp-action="Create" class="btn btn-admin-primary">Create Blog Post</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

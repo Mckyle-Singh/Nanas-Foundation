@@ -1,0 +1,44 @@
+﻿@model Nanas_Foundation.Models.Donation
+@{
+    ViewData["Title"] = "Make a Donation";
+}
+
+<!-- Donation Container -->
+<div class="auth-container">
+    <h1 class="auth-title">Make a Donation</h1>
+    <div class="auth-card">
+        @if (TempData["DonationError"] != null)
+        {
+            <div class="alert alert-danger">@TempData["DonationError"]</div>
+        }
+
+        <form asp-action="Create" method="post" class="auth-form">
+            @Html.AntiForgeryToken()
+
+            <div class="form-floating mb-3">
+                <input asp-for="Amount" class="form-control" type="number" step="0.01" min="1" placeholder="Amount" />
+                <label asp-for="Amount">Amount</label>
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select asp-for="Bank" class="form-select">
+                    <option value="">-- Select Bank --</option>
+                    <option>FNB</option>
+                    <option>Standard Bank</option>
+                    <option>ABSA</option>
+                    <option>Nedbank</option>
+                </select>
+                <label asp-for="Bank">Bank (Optional)</label>
+                <span asp-validation-for="Bank" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea asp-for="Notes" class="form-control" placeholder="Share Your Experience" style="height: 100px;"></textarea>
+                <label asp-for="Notes">Notes</label>
+            </div>
+
+            <button type="submit" class="auth-submit-btn">Proceed to Payment</button>
+        </form>
+    </div>
+</div>
