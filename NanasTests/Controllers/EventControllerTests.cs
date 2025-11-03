@@ -8,7 +8,7 @@ using System.Linq;
 using X.PagedList;
 using Xunit;
 
-namespace Nanas_Foundation.Tests.Controllers
+namespace NanasTests.Controllers
 {
     public class EventControllerTests
     {
