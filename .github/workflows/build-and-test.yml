@@ -3,8 +3,8 @@
 on:
   push:
     branches: [ "*" ]
-  pull_request:
-    branches: [ "*" ]
+  pull_request_target:
+    branches: [ "*" ] # Enables access to secrets and PR comments from forks
 
 env:
   DOTNET_VERSION: '8.0.x'
@@ -54,7 +54,7 @@ jobs:
 
     - name: Report test results to PR
       uses: dorny/test-reporter@v1
-      if: always()
+      if: github.event.pull_request.head.repo.full_name == github.repository
       with:
         name: .NET Tests
         path: TestResults/test-results.trx
@@ -66,7 +66,7 @@ jobs:
 
     - name: Check for broken links in views
       run: |
-        grep -r "href=\"#" ./Views | grep -v "javascript:void(0)" || echo "No broken anchors found"
+        grep -r 'href="#"' ./Views | grep -v "javascript:void(0)" || echo "No broken anchors found"
 
     - name: Validate HTML structure (basic)
       run: |
