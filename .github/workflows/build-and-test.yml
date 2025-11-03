@@ -43,11 +43,23 @@ jobs:
         echo "📂 Directory structure:"
         tree -L 2 || ls -la
 
-    - name: Run tests
-      run: dotnet test --no-restore --verbosity normal
+    - name: Run tests and generate report
+      run: dotnet test --no-restore --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory "TestResults"
 
-    - name: Run tests (if any)
-      run: dotnet test --no-restore --verbosity normal
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: TestResults/test-results.trx
+
+    - name: Report test results to PR
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: .NET Tests
+        path: TestResults/test-results.trx
+        reporter: dotnet-trx
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Check for Razor compilation errors
       run: dotnet razor --version || echo "Razor CLI not available, skipping"
@@ -63,3 +75,8 @@ jobs:
     - name: Lint C# files (basic formatting check)
       run: |
         dotnet format --verify-no-changes || echo "Code formatting looks good"
+
+    - name: Summary of test results
+      run: |
+        echo "## ✅ Test Summary" >> $GITHUB_STEP_SUMMARY
+        echo "All tests executed. See PR checks and artifacts for full report." >> $GITHUB_STEP_SUMMARY
