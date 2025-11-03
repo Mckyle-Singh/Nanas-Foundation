@@ -3,8 +3,8 @@
 on:
   push:
     branches: [ "*" ]
-  pull_request_target:
-    branches: [ "*" ] # Enables access to secrets and PR comments from forks
+  pull_request:
+    branches: [ "*" ]
 
 env:
   DOTNET_VERSION: '8.0.x'
@@ -43,30 +43,18 @@ jobs:
         echo "📂 Directory structure:"
         tree -L 2 || ls -la
 
-    - name: Run tests and generate report
-      run: dotnet test --no-restore --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory "TestResults"
+    - name: Run tests
+      run: dotnet test --no-restore --verbosity normal
 
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-results
-        path: TestResults/test-results.trx
-
-    - name: Report test results to PR
-      uses: dorny/test-reporter@v1
-      if: github.event.pull_request.head.repo.full_name == github.repository
-      with:
-        name: .NET Tests
-        path: TestResults/test-results.trx
-        reporter: dotnet-trx
-        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Run tests (if any)
+      run: dotnet test --no-restore --verbosity normal
 
     - name: Check for Razor compilation errors
       run: dotnet razor --version || echo "Razor CLI not available, skipping"
 
     - name: Check for broken links in views
       run: |
-        grep -r 'href="#"' ./Views | grep -v "javascript:void(0)" || echo "No broken anchors found"
+        grep -r "href=\"#" ./Views | grep -v "javascript:void(0)" || echo "No broken anchors found"
 
     - name: Validate HTML structure (basic)
       run: |
@@ -75,8 +63,3 @@ jobs:
     - name: Lint C# files (basic formatting check)
       run: |
         dotnet format --verify-no-changes || echo "Code formatting looks good"
-
-    - name: Summary of test results
-      run: |
-        echo "## ✅ Test Summary" >> $GITHUB_STEP_SUMMARY
-        echo "All tests executed. See PR checks and artifacts for full report." >> $GITHUB_STEP_SUMMARY
