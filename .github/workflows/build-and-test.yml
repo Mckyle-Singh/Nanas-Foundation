@@ -22,6 +22,14 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
     - name: Restore dependencies
       run: dotnet restore
 
@@ -33,28 +41,28 @@ jobs:
         echo "📁 Current directory: $(pwd)"
         echo "📦 .NET SDK version:"
         dotnet --version
-
-        echo "🔍 Looking for .csproj files:"
+        echo "🔍 .csproj files:"
         find . -name "*.csproj"
-
-        echo "🧪 Checking for test projects:"
+        echo "🧪 Test projects:"
         find . -type f -name "*Tests.csproj" || echo "⚠️ No test projects found"
-
         echo "📂 Directory structure:"
         tree -L 2 || ls -la
 
-    - name: Run tests
-      run: dotnet test --no-restore --verbosity normal
+    - name: Run tests and generate report
+      run: dotnet test --no-restore --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory "TestResults"
 
-    - name: Run tests (if any)
-      run: dotnet test --no-restore --verbosity normal
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: TestResults/test-results.trx
 
     - name: Check for Razor compilation errors
       run: dotnet razor --version || echo "Razor CLI not available, skipping"
 
     - name: Check for broken links in views
       run: |
-        grep -r "href=\"#" ./Views | grep -v "javascript:void(0)" || echo "No broken anchors found"
+        grep -r 'href="#"' ./Views | grep -v "javascript:void(0)" || echo "No broken anchors found"
 
     - name: Validate HTML structure (basic)
       run: |
@@ -63,3 +71,9 @@ jobs:
     - name: Lint C# files (basic formatting check)
       run: |
         dotnet format --verify-no-changes || echo "Code formatting looks good"
+
+    - name: Summary of test results
+      run: |
+        echo "## ✅ Build & Test Summary" >> $GITHUB_STEP_SUMMARY
+        echo "✔️ Build completed" >> $GITHUB_STEP_SUMMARY
+        echo "🧪 Tests executed. See artifacts for full report." >> $GITHUB_STEP_SUMMARY

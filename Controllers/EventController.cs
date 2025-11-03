@@ -96,7 +96,7 @@ namespace Nanas_Foundation.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetDetailsJson(Guid id)
         {

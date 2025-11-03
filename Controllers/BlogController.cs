@@ -93,7 +93,7 @@ namespace Nanas_Foundation.Controllers
             }
             _context.BlogPosts.Add(model);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Event");
+            return RedirectToAction("Index", "Blog");
         }
 
         [Authorize(Roles = "Admin")]

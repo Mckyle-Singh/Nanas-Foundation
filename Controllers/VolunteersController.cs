@@ -49,8 +49,22 @@ namespace Nanas_Foundation.Controllers
             var alreadyVolunteered = await _context.Volunteers
                 .AnyAsync(v => v.EventId == eventId && v.UserId == userId);
 
+            var today = DateTime.Today;
+            ViewBag.Events = await _context.Events
+                .Where(e => e.Date >= today)
+                .OrderBy(e => e.Date)
+                .Select(e => new SelectListItem
+                {
+                    Value = e.Id.ToString(),
+                    Text = $"{e.Title} ({e.Date:MMM d, yyyy})"
+                })
+                .ToListAsync();
+
             if (alreadyVolunteered)
-                return RedirectToAction("Index", "Event");
+            {
+                ViewBag.Message = "You’ve already volunteered for this event.";
+                return View("VolunteerForEvent");
+            }
 
             var volunteer = new Volunteer
             {
@@ -61,7 +75,8 @@ namespace Nanas_Foundation.Controllers
             _context.Volunteers.Add(volunteer);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Event");
+            ViewBag.Message = "Thank you for volunteering!";
+            return View("VolunteerForEvent");
         }
 
     }

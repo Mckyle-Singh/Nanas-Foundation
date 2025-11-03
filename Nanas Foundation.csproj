@@ -10,9 +10,13 @@
 
   <ItemGroup>
     <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="NanasTests\**" />
     <Content Remove="Data\Migrations\**" />
+    <Content Remove="NanasTests\**" />
     <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="NanasTests\**" />
     <None Remove="Data\Migrations\**" />
+    <None Remove="NanasTests\**" />
   </ItemGroup>
 
   <ItemGroup>
